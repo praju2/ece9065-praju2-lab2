@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="resources/images/favicon.ico" rel="shortcut icon">
+  <title>ECE 9065 - Lab 2</title>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="resources/lab2.css" />
+
+</head>
+
+<body>
+  <header>
+    <img alt="Western University" class="logo_img" height="80px" src="resources/images/westernlogo.svg">
+    <img alt="User Photo" class="user_img" src="resources/images/User_Avatar-512.png">
+    <div class='user-info'>
+      <label for="lbl-user-name"><span id="disp-ip-user-name" class="disp-text"
+          style="text-Transform:capitalize"></span></label>
+      <label for="lbl-user-email">(<span id="disp-ip-user-email" class="disp-text"></span>)</label>
+      <label for="lbl-user-birth-year">[<span id="disp-ip-user-birth-year" class="disp-text"></span>]</label><br />
+      <label for="lbl-user-log-out"><a href="#Logout" onClick="logout();">Logout</a></label>
+    </div>
+  </header>
+  <div class="nav-bar"></div>
+  <div class="container1">
+    <!-- The Modal -->
+    <div id="loginModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <img alt="Western University" class="modal_logo_img" src="resources/images/westernlogo.svg">
+        </div>
+        <div class="modal-body">
+          <h2>ECE 9065 - Lab 2</h2>
+          <form>
+            <div class="form-group">
+              <label for="usr">Name:<span class="form-mandatory-input">*</span></label>
+              <input type="text" maxlength="100" class="form-control validate-login" id="ip-user-name"
+                style="text-Transform:capitalize" placeholder="Full Name">
+              <span id="err-ip-user-name" class="form-error-msg"></span>
+            </div>
+            <div class="form-group">
+              <label for="usr">Email:<span class="form-mandatory-input">*</span></label>
+              <input type="text" class="form-control validate-login" id="ip-user-email"
+                placeholder="someone@example.com">
+              <span id="err-ip-user-email" class="form-error-msg"></span>
+            </div>
+            <div class="form-group">
+              <label for="usr">Year of birth:<span class="form-mandatory-input">*</span></label>
+              <input type="text" class="form-control validate-login" id="ip-user-birth-year"
+                placeholder="YYYY (1900 - Current Year)">
+              <span id="err-ip-user-birth-year" class="form-error-msg"></span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-user-log-in" id="btn-user-log-in">Log In</button>
+        </div>
+      </div>
+    </div>
+    <div class="sub-container1">
+      <h1>Library Checkout</h1>
+      <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'available-items')" id="defaultOpen">Items Available</button>
+        <button class="tablinks" onclick="openTab(event, 'basket')">Checkout List</button>
+        <button class="tablinks" onclick="openTab(event, 'available-items')" style="display: none;"
+          id="adminTab">Admin</button>
+      </div>
+      <div id="available-items" class="tabcontent">
+   
+      </div>
+      <div id="basket" class="tabcontent">
+      </div>
+      <div id="admin" class="tabcontent">
+      </div>
+    </div>
+    <script type='text/javascript' src='script.js'></script>
+    <script>
+      function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;  
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+
+      // Get the element with id="defaultOpen" and click on it
+      document.getElementById("defaultOpen").click();
+
+      /*var c=document.getElementById("available-items").childElementCount;
+      var div = document.createElement("div");
+      div= document.getElementById("available-items").appendChild(div);
+      var att = document.createAttribute("class");       // Create a "class" attribute
+      att.value = "items";  
+      div.setAttribute(att);*/
+
+
+      /*Test Code
+      <div class="items">
+              <img alt="Sample" class="item_img" src="resources/images/book1.jpg" />
+              <h4>The Subtle art of not giving a fu*k</h4>
+              <h5>by Mark Manson</h5>
+              <button class="btn-add-to-cart" id="btn-add-to-cart" onclick="addTocart('2')">Add to Cart</button>
+              <button class="btn-add-to-cart" id="btn-add-to-cart" onclick="addTocart('3')">Buy Now</button>
+            </div>
+    */
+
+    
+      
+
+    </script>
+  </div>
+</body>
+
+</html>
