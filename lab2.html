@@ -62,17 +62,17 @@
     <div class="sub-container1">
       <h1>Library Checkout</h1>
       <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'available-items')" id="defaultOpen">Items Available</button>
-        <button class="tablinks" onclick="openTab(event, 'basket')">Checkout List</button>
-        <button class="tablinks" onclick="openTab(event, 'available-items')" style="display: none;"
-          id="adminTab">Admin</button>
+        <button class="tablinks nonAdmin" onclick="openTab(event, 'available-items')" id="btnItemsAvailable">Items Available</button>
+        <button class="tablinks nonAdmin" onclick="openTab(event, 'basket')" id="btnCheckoutList">Checkout List</button>
+        <button class="tablinks admin" onclick="openTab(event, 'addItems')" style="display: none;" id="btnAddItems">Add Items</button>
+        <button class="tablinks admin" onclick="openTab(event, 'available-items')" style="display: none;" id="btnEditDeleteItems">Edit/Delete Items</button>
       </div>
       <div id="available-items" class="tabcontent">
    
       </div>
       <div id="basket" class="tabcontent">
       </div>
-      <div id="admin" class="tabcontent">
+      <div id="addItems" class="tabcontent">
       </div>
     </div>
     <script type='text/javascript' src='script.js'></script>
@@ -92,7 +92,7 @@
       }
 
       // Get the element with id="defaultOpen" and click on it
-      document.getElementById("defaultOpen").click();
+      document.getElementById("btnItemsAvailable").click();
 
       /*var c=document.getElementById("available-items").childElementCount;
       var div = document.createElement("div");

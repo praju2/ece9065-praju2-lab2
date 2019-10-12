@@ -171,12 +171,26 @@ function login() {
     if (admin) {
       document.getElementById("disp-ip-user-name").innerHTML = user_profile.user1.user_disp_name;
       document.getElementById("disp-ip-user-birth-year").innerHTML = "Admin";
-      document.getElementById("adminTab").style.display = "block";
-      /*var all = document.getElementsByClassName('admin');
+      var all = document.getElementsByClassName('admin');
       for (var i = 0; i < all.length; i++) {
-        all[i].style.display = 'block';
-  }*/     
-      
+        all[i].style.display = "block";
+      }    
+      all = document.getElementsByClassName("nonAdmin");
+      for (var i = 0; i < all.length; i++) {
+        all[i].style.display = "none";
+      }
+
+    }
+    else{
+      var all = document.getElementsByClassName("admin");
+      for (var i = 0; i < all.length; i++) {
+        all[i].style.display = "none";
+      }    
+      all = document.getElementsByClassName("nonAdmin");
+      for (var i = 0; i < all.length; i++) {
+        all[i].style.display = "block";
+      }
+
 
     }
     modal.style.display = "none";
@@ -245,7 +259,8 @@ for (count = 0; count < itemArray.length; count++) {
   htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
   htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
   htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
-  htmlText = htmlText.concat("<button class=\"btn-add-to-cart\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
+  htmlText = htmlText.concat("<button class=\"btn-add-to-cart nonAdmin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
+  htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"addTocart('" + itemArray[count].id + "')\">Edit</button>");
   htmlText = htmlText.concat("<button class=\"btn-delete admin\" id=\"btn-delete\" onclick=\"addTocart('" + itemArray[count].id + "')\">Delete</button>");
   htmlText = htmlText.concat("</div>");
 
@@ -279,7 +294,7 @@ class library {
         htmlText = htmlText.concat("</div>");
 
         let basket = document.getElementById("basket");
-        basket.insertAdjacentHTML("beforeend", htmlText);
+        basket.insertAdjacentHTML("afterbegin", htmlText);
       }
     }
   }
@@ -298,7 +313,7 @@ class library {
           htmlText = htmlText.concat("</div>");
 
           let available_items = document.getElementById("available-items");
-          available_items.insertAdjacentHTML("beforeend", htmlText);
+          available_items.insertAdjacentHTML("afterbegin", htmlText);
 
         }
 

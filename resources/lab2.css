@@ -119,8 +119,7 @@ img.item_img{
 }
 
 
-.items .btn-add-to-cart {
-  background-color:  #005f28;
+button{
   box-sizing: border-box;
   border: none;
   border-radius: 4px;
@@ -133,10 +132,40 @@ img.item_img{
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+button.btn-user-log-in {
+  background-color:  #561b8d;
+  width : 100%;
+  color: white;
+  padding: 6px 12px;
+  display: inline-block;
+  margin: 0px 0px;
+}
+
+.items button.btn-add-to-cart {
+  background-color:  #005f28;
+  margin: 4px 2px;
   position: relative;
   top: 0%;
   left: 72%;
 }
+
+.items button.btn-delete {
+  background-color:  #9c0101;
+  margin: 4px 2px;
+  position: relative;
+  top: 0%;
+  left: 72%;
+}
+.items button.btn-edit {
+  background-color:  #f0c14b;
+  margin: 4px 2px;
+  position: relative;
+  top: 0%;
+  left: 72%;
+}
+
 .admin{
   display : none;
 }
@@ -266,11 +295,14 @@ margin: 0px;
   cursor: pointer;
   transition: 0.3s;
   font-size: 17px;
+  border-radius: 0%;
+  margin: 0px 0px;
 }
+
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: #ddd;
+  background-color: rgb(163, 163, 163);
 }
 
 /* Create an active/current "tab button" class */
