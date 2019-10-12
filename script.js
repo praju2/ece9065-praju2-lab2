@@ -49,6 +49,7 @@ document.getElementById("edit-modal-close").addEventListener("click", function (
 });
 
 document.getElementById("btn-edit-update").addEventListener("click", () => {
+  if(validateCopies(document.getElementById("ip-edit-item-copies"))){
   let book_id = document.getElementById("edit-book-id").value;
   itemArray.forEach((item) => {
     if (book_id == item.id) {
@@ -57,6 +58,7 @@ document.getElementById("btn-edit-update").addEventListener("click", () => {
     }
   });
   libObj.reset();
+  }
 });
 
 document.getElementById("btn-edit-item-image").addEventListener("change", function () {
@@ -73,11 +75,29 @@ document.getElementById("btn-edit-item-image").addEventListener("change", functi
     });
 
   }
+});
 
-
-
+document.getElementById("ip-edit-item-copies").addEventListener("input", function () {
+  validateCopies(this);
 
 });
+
+function validateCopies(element)
+{
+
+   if( validateNumber(element, errMsg.ip_edit_item_copies_invalid_char))
+  {
+    if(element.value<1 || element.value>10)
+    {
+      return displayErrSpan(element, "block", errMsg.ip_edit_item_copies_invalid);
+    }else{
+      return displayErrSpan(element, "none", "");
+    }
+  }else{
+    return displayErrSpan(element, "block", errMsg.ip_edit_item_copies_invalid_char);
+  }
+
+}
 
 function validateBirthYear(element) {
   if (validateNumber(element, errMsg.ip_user_birth_year_invalid_char)) {
@@ -254,7 +274,9 @@ const errMsg = {
   ip_user_email_invalid: "Please enter a valid Email Id.",
   ip_user_birth_year_mandatory: "Year of birth is mandatory.",
   ip_user_birth_year_invalid_char: "Only digits allowed.",
-  ip_user_birth_year_invalid: "Please enter a valid Year of Birth between 1900 and Current Year."
+  ip_user_birth_year_invalid: "Please enter a valid Year of Birth between 1900 and Current Year.",
+  ip_edit_item_copies_invalid_char: "Only digits allowed.",
+  ip_edit_item_copies_invalid: "Please enter number of copies between 1 and 10 (inclusive).",
 };
 
 const user_profile = {
@@ -287,16 +309,16 @@ class item {
   }
 }
 
-let itemArray = new Array(new item("1", "book", "Clean Code: A Handbook of Agile Software Craftsmanship", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean code.jpg"),
-  new item("2", "book", "The Clean Coder: A Code of Conduct for Professional Programmers", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean coder.jpg"),
-  new item("3", "book", "Clean Architecture: A Craftsman's Guide to Software Structure and Design", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean architecture.jpg"),
-  new item("4", "book", "Becoming", "Publisher", "Michelle Obama", "1st Edition", 1, "resources/images/Becoming.jpg"),
-  new item("5", "book", "Dreams from My Father: A Story of Race and Inheritance", "Publisher", "Barack Obama", "10th Edition", 1, "resources/images/Dreams Barack Obama.jpg"),
-  new item("6", "book", "I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban", "Publisher", "Malala Yousafzai", "4th Edition", 1, "resources/images/malala.jpg"),
-  new item("7", "book", "Long Walk to Freedom: The Autobiography of Nelson Mandela", "Publisher", "Nelson Mandela", "12th Edition", 1, "resources/images/Long Walk nelson.jpg"),
-  new item("8", "book", "The Audacity of Hope: Thoughts on Reclaiming the American Dream", "Publisher", "Barack Obama", "7th Edition", 1, "resources/images/Audacity Barack Obama.jpg"),
-  new item("9", "book", "An Autobiography: The Story of My Experiments with Truth", "Publisher", "Mahatma Gandhi", "9th Edition", 1, "resources/images/gandhi.jpg"),
-  new item("10", "book", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg")
+let itemArray = new Array(new item("1", "Book", "Clean Code: A Handbook of Agile Software Craftsmanship", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean code.jpg"),
+  new item("2", "Book", "The Clean Coder: A Code of Conduct for Professional Programmers", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean coder.jpg"),
+  new item("3", "Book", "Clean Architecture: A Craftsman's Guide to Software Structure and Design", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean architecture.jpg"),
+  new item("4", "Book", "Becoming", "Publisher", "Michelle Obama", "1st Edition", 1, "resources/images/Becoming.jpg"),
+  new item("5", "Book", "Dreams from My Father: A Story of Race and Inheritance", "Publisher", "Barack Obama", "10th Edition", 1, "resources/images/Dreams Barack Obama.jpg"),
+  new item("6", "Book", "I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban", "Publisher", "Malala Yousafzai", "4th Edition", 1, "resources/images/malala.jpg"),
+  new item("7", "Book", "Long Walk to Freedom: The Autobiography of Nelson Mandela", "Publisher", "Nelson Mandela", "12th Edition", 1, "resources/images/Long Walk nelson.jpg"),
+  new item("8", "Book", "The Audacity of Hope: Thoughts on Reclaiming the American Dream", "Publisher", "Barack Obama", "7th Edition", 1, "resources/images/Audacity Barack Obama.jpg"),
+  new item("9", "Book", "An Autobiography: The Story of My Experiments with Truth", "Publisher", "Mahatma Gandhi", "9th Edition", 1, "resources/images/gandhi.jpg"),
+  new item("10", "Book", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg")
 );
 
 
@@ -324,6 +346,10 @@ class library {
       htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
       htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
       htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
+      htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
+      htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
+      htmlText = htmlText.concat("<b>Type:</b> " + itemArray[count].type + "    ");
+      htmlText = htmlText.concat("<b>Copies:</b> " + itemArray[count].copies + "</p>");
       htmlText = htmlText.concat("<button class=\"btn-add-to-cart non-admin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
       htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"editItem('" + itemArray[count].id + "')\">Edit</button>");
       htmlText = htmlText.concat("<button class=\"btn-delete admin\" id=\"btn-delete\" onclick=\"deleteItem('" + itemArray[count].id + "')\">Delete</button>");
@@ -355,6 +381,9 @@ class library {
         htmlText = htmlText.concat("<img alt=\"" + this.itemArray[count].name + "\" class=\"item_img\" src=\"" + this.itemArray[count].image + "\" />");
         htmlText = htmlText.concat("<h4>" + this.itemArray[count].name + "</h4> by ");
         htmlText = htmlText.concat("<h5>" + this.itemArray[count].author + "</h5>");
+        htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
+        htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
+        htmlText = htmlText.concat("<b>Type:</b> " + itemArray[count].type + "    ");
         htmlText = htmlText.concat("<button class=\"btn-add-to-cart\" id=\"btn-add-to-cart\" onclick=\"removeFromCart('" + itemArray[count].id + "')\">Remove from Cart</button>");
         htmlText = htmlText.concat("</div>");
 
@@ -375,6 +404,10 @@ class library {
           htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
           htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
           htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
+          htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
+          htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
+          htmlText = htmlText.concat("<b>Type:</b> " + itemArray[count].type + "    ");
+          htmlText = htmlText.concat("<b>Copies:</b> " + itemArray[count].copies + "</p>");          
           htmlText = htmlText.concat("<button class=\"btn-add-to-cart\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
           htmlText = htmlText.concat("</div>");
 
@@ -401,6 +434,7 @@ class library {
         document.getElementById("edit-item-name").innerHTML = this.itemArray[count].name;
         document.getElementById("edit-item-author").innerHTML = this.itemArray[count].author;
         document.getElementById("edit-item-edition").innerHTML = this.itemArray[count].edition;
+        document.getElementById("edit-item-type").innerHTML = this.itemArray[count].type;
         document.getElementById("edit-item-publisher").innerHTML = this.itemArray[count].publisher;
         document.getElementById("ip-edit-item-copies").value = this.itemArray[count].copies;
         edit_modal.style.display = "block";

@@ -76,10 +76,10 @@
                     <h4><label for="lbl-edit-item-name"><span class="edit-item-name" id="edit-item-name"></span></label></h4>
                     <label for="lbl-edit-item-author">Author: <span class="edit-item-author" id="edit-item-author"></span></label><br/>
                     <label for="lbl-edit-item-edition">Edition: <span class="edit-item-edition" id="edit-item-edition"></span></label><br/>
-                    <label for="lbl-edit-item-edition">Publisher: <span class="edit-item-publisher" id="edit-item-publisher"></span></label><br/>
+                    <label for="lbl-edit-item-publisher">Publisher: <span class="edit-item-publisher" id="edit-item-publisher"></span></label><br/>
                     <label for="lbl-edit-item-type">Type: <span class="edit-item-type" id="edit-item-type"></span></label><br/>
                     <div class="form-group">
-                        <label for="lbl_edit-item-copie">Available Copies:<span class="form-mandatory-input">*</span></label>
+                        <label for="lbl_edit-item-copies">Available Copies:<span class="form-mandatory-input">*</span></label>
                         <input type="text" class="form-control" id="ip-edit-item-copies"
                           placeholder="Number of copies">
                         <span id="err-ip-edit-item-copies" class="form-error-msg"></span>
@@ -126,29 +126,7 @@
         evt.currentTarget.className += " active";
       }
 
-      // Get the element with id="defaultOpen" and click on it
       document.getElementById("btn-items-available").click();
-
-      /*var c=document.getElementById("available-items").childElementCount;
-      var div = document.createElement("div");
-      div= document.getElementById("available-items").appendChild(div);
-      var att = document.createAttribute("class");       // Create a "class" attribute
-      att.value = "items";  
-      div.setAttribute(att);*/
-
-
-      /*Test Code
-      <div class="items">
-              <img alt="Sample" class="item_img" src="resources/images/book1.jpg" />
-              <h4>The Subtle art of not giving a fu*k</h4>
-              <h5>by Mark Manson</h5>
-              <button class="btn-add-to-cart" id="btn-add-to-cart" onclick="addTocart('2')">Add to Cart</button>
-              <button class="btn-add-to-cart" id="btn-add-to-cart" onclick="addTocart('3')">Buy Now</button>
-            </div>
-    */
-
-    
-      
 
     </script>
   </div>
