@@ -29,6 +29,10 @@ body{
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
 }
 
+.edit-modal-content .form-control {
+  width:15%;
+}
+
 
 /*button.btn-user-log-in {
   background-color:  #561b8d;
@@ -166,6 +170,17 @@ button.btn-user-log-in {
   left: 72%;
 }
 
+  button.btn-edit-update {
+  background-color:  #561b8d;
+  color: white;
+  padding: 6px 12px;
+  display: inline-block;
+  margin: 0px 0px;
+  position: relative;
+  left : 18%;
+  margin: 15px 15px;
+}
+
 .admin{
   display : none;
 }
@@ -202,6 +217,10 @@ header{
   animation-name: fadeIn;
 }
 
+.edit-modal{
+  background-color: rgba(0,0,0, 0.9); 
+  animation-name: fadeIn;
+}
 
   /* Modal Content */
 .modal-content {
@@ -218,6 +237,17 @@ header{
   animation-duration: 2s
 
 }
+
+.edit-modal-content{
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  background-color: #fefefe;
+  width: 50%;
+  height: 50%;
+  animation-name: fadeIn;
+  
+
+}
   
   /* The Close Button */
   .close {
@@ -227,7 +257,13 @@ header{
     font-size: 28px;
     font-weight: bold;
   }
+  .edit-modal .close {
+    display: block; 
+  }
   
+  .edit-items{
+    line-height: 1.6;
+  }
 
   a:link {
     font-weight: bold;

@@ -59,6 +59,41 @@
         </div>
       </div>
     </div>
+    <div id="edit-modal" class="modal edit-modal">
+        <!-- Modal content -->
+        <div class="modal-content edit-modal-content">
+          <div class="modal-header">
+            <span class="close" id="edit-modal-close">&times;</span>
+           <h2>Edit</h2>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div id="edit-item"  class="edit-items">
+                    <img alt=""  class="item_img" src="" id="edit-item-img"/>
+
+                    
+                    <input type="hidden" id="edit-book-id"  value="">
+                    <h4><label for="lbl-edit-item-name"><span class="edit-item-name" id="edit-item-name"></span></label></h4>
+                    <label for="lbl-edit-item-author">Author: <span class="edit-item-author" id="edit-item-author"></span></label><br/>
+                    <label for="lbl-edit-item-edition">Edition: <span class="edit-item-edition" id="edit-item-edition"></span></label><br/>
+                    <label for="lbl-edit-item-edition">Publisher: <span class="edit-item-publisher" id="edit-item-publisher"></span></label><br/>
+                    <label for="lbl-edit-item-type">Type: <span class="edit-item-type" id="edit-item-type"></span></label><br/>
+                    <div class="form-group">
+                        <label for="lbl_edit-item-copie">Available Copies:<span class="form-mandatory-input">*</span></label>
+                        <input type="text" class="form-control" id="ip-edit-item-copies"
+                          placeholder="Number of copies">
+                        <span id="err-ip-edit-item-copies" class="form-error-msg"></span>
+                    </div>
+                    
+                    <label for="lbl-edit-item-image-btn">Icon: <input type='file' id="btn-edit-item-image"/></label><br/>
+                    <button type="button" class="btn-edit-update" id="btn-edit-update">Update</button>
+                    </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
     <div class="sub-container1">
       <h1>Library Checkout</h1>
       <div class="tab">

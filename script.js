@@ -1,17 +1,19 @@
 var currentYear = new Date().getFullYear();
 let admin = false;
 var modal = document.getElementById("login-modal");
+let edit_modal = document.getElementById("edit-modal");
 
 
 modal.style.display = "block";
-/*
+
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
 }
-*/
+
 function displayErrSpan(element, block_none, errMsg) {
   document.getElementById("err-" + element.id).style.display = block_none;
   if (block_none === "block") {
@@ -41,6 +43,28 @@ document.getElementById("ip-user-birth-year").addEventListener("input", function
   validateBirthYear(this);
 });
 document.getElementById("btn-user-log-in").addEventListener("click", login);
+
+document.getElementById("edit-modal-close").addEventListener("click", function () {
+  edit_modal.style.display = "none";
+});
+
+document.getElementById("btn-edit-update").addEventListener("click", () => {
+  let book_id = document.getElementById("edit-book-id").value;
+  itemArray.forEach((item) => {
+    if (book_id == item.id) {
+      item.updateItem(document.getElementById("ip-edit-item-copies").value);
+      edit_modal.style.display = "none";
+    }
+  });
+});
+
+document.getElementById("btn-edit-item-image").addEventListener("change", function () {
+  if (this.files && this.files[0]) {
+    let edit_item_image = document.getElementById("edit-item-img")
+    edit_item_image.src = URL.createObjectURL(this.files[0]);
+
+  }
+});
 
 function validateBirthYear(element) {
   if (validateNumber(element, errMsg.ip_user_birth_year_invalid_char)) {
@@ -168,37 +192,71 @@ function login() {
 
 
   if (success) {
-    if (admin) {
+    setParameters();
+    /*if (admin) {
       document.getElementById("disp-ip-user-name").innerHTML = user_profile.user1.user_disp_name;
       document.getElementById("disp-ip-user-birth-year").innerHTML = "Admin";
       var all = document.getElementsByClassName('admin');
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "block";
-      }    
+      }
       all = document.getElementsByClassName("non-admin");
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "none";
       }
 
     }
-    else{
+    else {
       var all = document.getElementsByClassName("admin");
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "none";
-      }    
+      }
       all = document.getElementsByClassName("non-admin");
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "block";
       }
 
 
-    }
+    }*/
     modal.style.display = "none";
   }
 }
+function setParameters()
+{
+  if (admin) {
+    document.getElementById("disp-ip-user-name").innerHTML = user_profile.user1.user_disp_name;
+    document.getElementById("disp-ip-user-birth-year").innerHTML = "Admin";
+    var all = document.getElementsByClassName('admin');
+    for (var i = 0; i < all.length; i++) {
+      all[i].style.display = "block";
+    }
+    all = document.getElementsByClassName("non-admin");
+    for (var i = 0; i < all.length; i++) {
+      all[i].style.display = "none";
+    }
+
+  }
+  else {
+    var all = document.getElementsByClassName("admin");
+    for (var i = 0; i < all.length; i++) {
+      all[i].style.display = "none";
+    }
+    all = document.getElementsByClassName("non-admin");
+    for (var i = 0; i < all.length; i++) {
+      all[i].style.display = "block";
+    }
+
+
+  }
+
+}
+
+
 function logout() {
   admin = false;
-  window.location.reload();
+  //window.location.reload();
+  libObj.reset();
+  modal.style.display = "block";
 }
 const errMsg = {
   mandatory: "Mandatory Field.",
@@ -230,15 +288,11 @@ class item {
     this.edition = edition;
     this.copies = copies;
     this.image = image;
+    this.active = true;
   }
-  addItem() {
-    console.log("Add Item...");
-  }
-  removeItem() {
-    console.log("Remove Item...");
-  }
-  editItem() {
-    alert(this.name);
+
+  updateItem(copies) {
+    this.copies = copies;
   }
 }
 
@@ -255,20 +309,7 @@ let itemArray = new Array(new item("1", "book", "Clean Code: A Handbook of Agile
 );
 
 
-let count = 0;
-for (count = 0; count < itemArray.length; count++) {
-  let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
-  htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
-  htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
-  htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
-  htmlText = htmlText.concat("<button class=\"btn-add-to-cart non-admin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
-  htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"editItem('" + itemArray[count].id + "')\">Edit</button>");
-  htmlText = htmlText.concat("<button class=\"btn-delete admin\" id=\"btn-delete\" onclick=\"addTocart('" + itemArray[count].id + "')\">Delete</button>");
-  htmlText = htmlText.concat("</div>");
 
-  let available_items = document.getElementById("available-items");
-  available_items.insertAdjacentHTML("beforeend", htmlText);
-}
 
 
 class library {
@@ -276,14 +317,45 @@ class library {
     this.itemArray = itemArray;
   }
 
+  reset() {
+
+    let rootNode = document.getElementById("available-items");
+    let childNode = rootNode.lastElementChild;
+    while (childNode) {
+      rootNode.removeChild(childNode);
+      childNode = rootNode.lastElementChild;
+    }
+
+    let count = 0;
+    for (count = 0; count < itemArray.length; count++) {
+      if(this.itemArray[count].active){
+      let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
+      htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
+      htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
+      htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
+      htmlText = htmlText.concat("<button class=\"btn-add-to-cart non-admin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
+      htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"editItem('" + itemArray[count].id + "')\">Edit</button>");
+      htmlText = htmlText.concat("<button class=\"btn-delete admin\" id=\"btn-delete\" onclick=\"deleteItem('" + itemArray[count].id + "')\">Delete</button>");
+      htmlText = htmlText.concat("</div>");
+
+      let available_items = document.getElementById("available-items");
+      available_items.insertAdjacentHTML("beforeend", htmlText);
+      }
+    }
+
+    setParameters();
+
+  }
+
   addToCart(itemId) {
     let count = 0;
     for (count = 0; count < this.itemArray.length; count++) {
-      if (this.itemArray[count].id == itemId) {
+      if (this.itemArray[count].id == itemId && this.itemArray[count].active) {
         this.itemArray[count].copies--;
         if (this.itemArray[count].copies == 0) {
           let removeObj = document.getElementById("item" + this.itemArray[count].id);
           removeObj.remove();
+          this.itemArray[count].active = false;
         }
 
 
@@ -291,12 +363,13 @@ class library {
         let htmlText = "<div id=\"divIdBasket" + this.itemArray[count].id + "\" class=\"items\"\>";
         htmlText = htmlText.concat("<img alt=\"" + this.itemArray[count].name + "\" class=\"item_img\" src=\"" + this.itemArray[count].image + "\" />");
         htmlText = htmlText.concat("<h4>" + this.itemArray[count].name + "</h4> by ");
-        htmlText = htmlText.concat("<h5>" + this.itemArray[count].author + "</h5>");        
+        htmlText = htmlText.concat("<h5>" + this.itemArray[count].author + "</h5>");
         htmlText = htmlText.concat("<button class=\"btn-add-to-cart\" id=\"btn-add-to-cart\" onclick=\"removeFromCart('" + itemArray[count].id + "')\">Remove from Cart</button>");
         htmlText = htmlText.concat("</div>");
 
         let basket = document.getElementById("basket");
         basket.insertAdjacentHTML("afterbegin", htmlText);
+        break;
       }
     }
   }
@@ -316,6 +389,7 @@ class library {
 
           let available_items = document.getElementById("available-items");
           available_items.insertAdjacentHTML("afterbegin", htmlText);
+          this.itemArray[count].active = true;
 
         }
 
@@ -323,22 +397,45 @@ class library {
         let removeObj = document.getElementById("divIdBasket" + this.itemArray[count].id);
         removeObj.remove();
       }
+      break;
     }
   }
   editItem(itemId) {
     let count = 0;
     for (count = 0; count < this.itemArray.length; count++) {
       if (this.itemArray[count].id == itemId) {
-        this.itemArray[count].editItem();
+        document.getElementById("edit-book-id").value = this.itemArray[count].id;
+        document.getElementById("edit-item-img").setAttribute("src", this.itemArray[count].image);
+        document.getElementById("edit-item-img").setAttribute("alt", this.itemArray[count].name);
+        document.getElementById("edit-item-name").innerHTML = this.itemArray[count].name;
+        document.getElementById("edit-item-author").innerHTML = this.itemArray[count].author;
+        document.getElementById("edit-item-edition").innerHTML = this.itemArray[count].edition;
+        document.getElementById("edit-item-publisher").innerHTML = this.itemArray[count].publisher;
+        document.getElementById("ip-edit-item-copies").value = this.itemArray[count].copies;
+        edit_modal.style.display = "block";
+        break;
       }
     }
   }
 
+  deleteItem(itemId) {
+    let count = 0;
+    for (count = 0; count < this.itemArray.length; count++) {
+      if (this.itemArray[count].id == itemId && this.itemArray[count].active) {
+        let removeObj = document.getElementById("item" + this.itemArray[count].id);
+        removeObj.remove();
+        this.itemArray[count].active = false;
+        break;
+      }
+    }
+   // this.reset();
+  }
 
 }
 
 let libObj = new library(itemArray);
 //libObj.addToCart("hi");
+libObj.reset();
 function addTocart(val) {
   libObj.addToCart(val);
 
@@ -351,5 +448,10 @@ function removeFromCart(val) {
 
 function editItem(val) {
   libObj.editItem(val);
+
+}
+
+function deleteItem(val) {
+  libObj.deleteItem(val);
 
 }
