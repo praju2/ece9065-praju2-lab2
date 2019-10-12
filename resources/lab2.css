@@ -30,7 +30,7 @@ body{
 }
 
 
-button.btn-user-log-in {
+/*button.btn-user-log-in {
   background-color:  #561b8d;
   border: none;
   border-radius: 4px;
@@ -41,10 +41,10 @@ button.btn-user-log-in {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  /*margin: 4px 2px;*/
+
   cursor: pointer;
 }
-
+*/
 
 .form-error-msg{
   display: none;
@@ -180,35 +180,44 @@ header{
     margin: 0px 8px;
     
 }
-/* The Modal (background) */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-image: url("images/user_model_bg.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color:  #561b8d; /* Fallback color */
-    /*background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    animation-name: fadeIn;
-    /*animation-duration: 0s*/
-  }
-  
-    /* Modal Content */
-  .modal-content {
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    background-color: #fefefe;
-    width: 30%;
-    animation-name: fadeIn;
-    animation-duration: 2s
-  }
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+
+}
+
+.login-modal{
+  background-image: url("images/user_model_bg.jpg");
+  background-color:  #561b8d; 
+  animation-name: fadeIn;
+}
+
+
+  /* Modal Content */
+.modal-content {
+  padding: 20px;
+  background-color: #fefefe;
+ }
+
+.login-modal-content{
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  background-color: #fefefe;
+  width: 30%;
+  animation-name: fadeIn;
+  animation-duration: 2s
+
+}
   
   /* The Close Button */
   .close {

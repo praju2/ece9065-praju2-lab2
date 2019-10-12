@@ -1,6 +1,6 @@
 var currentYear = new Date().getFullYear();
 let admin = false;
-var modal = document.getElementById("loginModal");
+var modal = document.getElementById("login-modal");
 
 
 modal.style.display = "block";
@@ -175,7 +175,7 @@ function login() {
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "block";
       }    
-      all = document.getElementsByClassName("nonAdmin");
+      all = document.getElementsByClassName("non-admin");
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "none";
       }
@@ -186,7 +186,7 @@ function login() {
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "none";
       }    
-      all = document.getElementsByClassName("nonAdmin");
+      all = document.getElementsByClassName("non-admin");
       for (var i = 0; i < all.length; i++) {
         all[i].style.display = "block";
       }
@@ -237,7 +237,9 @@ class item {
   removeItem() {
     console.log("Remove Item...");
   }
-
+  editItem() {
+    alert(this.name);
+  }
 }
 
 let itemArray = new Array(new item("1", "book", "Clean Code: A Handbook of Agile Software Craftsmanship", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean code.jpg"),
@@ -259,8 +261,8 @@ for (count = 0; count < itemArray.length; count++) {
   htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
   htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
   htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
-  htmlText = htmlText.concat("<button class=\"btn-add-to-cart nonAdmin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
-  htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"addTocart('" + itemArray[count].id + "')\">Edit</button>");
+  htmlText = htmlText.concat("<button class=\"btn-add-to-cart non-admin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
+  htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"editItem('" + itemArray[count].id + "')\">Edit</button>");
   htmlText = htmlText.concat("<button class=\"btn-delete admin\" id=\"btn-delete\" onclick=\"addTocart('" + itemArray[count].id + "')\">Delete</button>");
   htmlText = htmlText.concat("</div>");
 
@@ -323,6 +325,15 @@ class library {
       }
     }
   }
+  editItem(itemId) {
+    let count = 0;
+    for (count = 0; count < this.itemArray.length; count++) {
+      if (this.itemArray[count].id == itemId) {
+        this.itemArray[count].editItem();
+      }
+    }
+  }
+
 
 }
 
@@ -338,3 +349,7 @@ function removeFromCart(val) {
 
 }
 
+function editItem(val) {
+  libObj.editItem(val);
+
+}
