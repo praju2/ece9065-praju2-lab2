@@ -29,6 +29,13 @@ body{
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
 }
 
+.sub-container2{
+  padding-top: 20px;
+}
+td{
+  padding: 0px 20px;
+}
+
 .edit-modal-content .form-control {
   width:15%;
 }
@@ -170,7 +177,7 @@ button.btn-user-log-in {
   left: 72%;
 }
 
-  button.btn-edit-update {
+  button.btn-edit-update,.btn-add-item {
   background-color:  #561b8d;
   color: white;
   padding: 6px 12px;

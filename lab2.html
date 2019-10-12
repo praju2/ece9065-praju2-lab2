@@ -60,60 +60,146 @@
       </div>
     </div>
     <div id="edit-modal" class="modal edit-modal">
-        <!-- Modal content -->
-        <div class="modal-content edit-modal-content">
-          <div class="modal-header">
-            <span class="close" id="edit-modal-close">&times;</span>
-           <h2>Edit</h2>
-          </div>
-          <div class="modal-body">
-            <form>
-                <div id="edit-item"  class="edit-items">
-                    <img alt=""  class="item_img" src="" id="edit-item-img"/>
+      <!-- Modal content -->
+      <div class="modal-content edit-modal-content">
+        <div class="modal-header">
+          <span class="close" id="edit-modal-close">&times;</span>
+          <h2>Edit</h2>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div id="edit-item" class="edit-items">
+              <img alt="" class="item_img" src="" id="edit-item-img" />
 
-                    
-                    <input type="hidden" id="edit-book-id"  value="">
-                    <h4><label for="lbl-edit-item-name"><span class="edit-item-name" id="edit-item-name"></span></label></h4>
-                    <label for="lbl-edit-item-author">Author: <span class="edit-item-author" id="edit-item-author"></span></label><br/>
-                    <label for="lbl-edit-item-edition">Edition: <span class="edit-item-edition" id="edit-item-edition"></span></label><br/>
-                    <label for="lbl-edit-item-publisher">Publisher: <span class="edit-item-publisher" id="edit-item-publisher"></span></label><br/>
-                    <label for="lbl-edit-item-type">Type: <span class="edit-item-type" id="edit-item-type"></span></label><br/>
-                    <div class="form-group">
-                        <label for="lbl_edit-item-copies">Available Copies:<span class="form-mandatory-input">*</span></label>
-                        <input type="text" class="form-control" id="ip-edit-item-copies"
-                          placeholder="Number of copies">
-                        <span id="err-ip-edit-item-copies" class="form-error-msg"></span>
-                    </div>
-                    
-                    <label for="lbl-edit-item-image-btn">Icon: <input type='file' id="btn-edit-item-image"/></label><br/>
-                    <button type="button" class="btn-edit-update" id="btn-edit-update">Update</button>
-                    </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-          </div>
+
+              <input type="hidden" id="edit-book-id" value="">
+              <h4><label for="lbl-edit-item-name"><span class="edit-item-name" id="edit-item-name"></span></label></h4>
+              <label for="lbl-edit-item-author">Author: <span class="edit-item-author"
+                  id="edit-item-author"></span></label><br />
+              <label for="lbl-edit-item-edition">Edition: <span class="edit-item-edition"
+                  id="edit-item-edition"></span></label><br />
+              <label for="lbl-edit-item-publisher">Publisher: <span class="edit-item-publisher"
+                  id="edit-item-publisher"></span></label><br />
+              <label for="lbl-edit-item-type">Type: <span class="edit-item-type"
+                  id="edit-item-type"></span></label><br />
+              <div class="form-group">
+                <label for="lbl_edit-item-copies">Available Copies:<span class="form-mandatory-input">*</span></label>
+                <input type="text" maxlength="2" class="form-control" id="ip-edit-item-copies"
+                  placeholder="Number of copies">
+                <span id="err-ip-edit-item-copies" class="form-error-msg"></span>
+              </div>
+
+              <label for="lbl-edit-item-image-btn">Icon: <input type='file' id="btn-edit-item-image" /></label><br />
+              <button type="button" class="btn-edit-update" id="btn-edit-update">Update</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
         </div>
       </div>
+    </div>
     <div class="sub-container1">
       <h1>Library Checkout</h1>
       <div class="tab">
-        <button class="tablinks non-admin" onclick="openTab(event, 'available-items')" id="btn-items-available">Items Available</button>
-        <button class="tablinks non-admin" onclick="openTab(event, 'basket')" id="btn-checkout-list">Checkout List</button>
-        <button class="tablinks admin" onclick="openTab(event, 'addItems')" style="display: none;" id="btn-add-items">Add Items</button>
-        <button class="tablinks admin" onclick="openTab(event, 'available-items')" style="display: none;" id="btn-edit-delete-items">Edit/Delete Items</button>
+        <button class="tablinks non-admin" onclick="openTab(event, 'available-items')" id="btn-items-available">Items
+          Available</button>
+        <button class="tablinks non-admin" onclick="openTab(event, 'basket')" id="btn-checkout-list">Checkout
+          List</button>
+        <button class="tablinks admin" onclick="openTab(event, 'add-items')" style="display: none;"
+          id="btn-add-items">Add Items</button>
+        <button class="tablinks admin" onclick="openTab(event, 'available-items')" style="display: none;"
+          id="btn-edit-delete-items">Edit/Delete Items</button>
       </div>
       <div id="available-items" class="tabcontent">
-   
+
       </div>
       <div id="basket" class="tabcontent">
       </div>
       <div id="add-items" class="tabcontent">
+        <div class="sub-container2">
+
+          <form>
+            <div class="add-item-image">
+              <img alt="" class="item_img" src="resources/images/User_Avatar-512.png" id="add-item-img" />           
+            </div>
+            <table class="table" width="70%">
+              <tr>
+                <td>
+                  <div class="form-group">
+                    <label for="add-item-name">Name:<span class="form-mandatory-input">*</span></label>
+                    <input type="text" maxlength="100" class="form-control validate-add" id="ip-add-item-name"
+                      style="text-Transform:capitalize" placeholder="Book/CD Name">
+                    <span id="err-ip-add-item-name" class="form-error-msg"></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <label for="add-item-author">Author:<span class="form-mandatory-input">*</span></label>
+                    <input type="text" maxlength="100" class="form-control validate-add" id="ip-add-item-author"
+                      style="text-Transform:capitalize" placeholder="Name of the Author">
+                    <span id="err-ip-add-item-author" class="form-error-msg"></span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="form-group">
+                    <label for="add-item-type">Type:<span class="form-mandatory-input">*</span></label>
+                    <select class="form-control" id="ip-add-item-type">
+                      <option>Book</option>
+                      <option>CD</option>
+                    </select>
+                    <span id="err-ip-add-item-type" class="form-error-msg"></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <label for="add-item-publisher">Publisher:<span class="form-mandatory-input">*</span></label>
+                    <input type="text" maxlength="100" class="form-control validate-add" id="ip-add-item-publisher"
+                      style="text-Transform:capitalize" placeholder="Name of the Publisher">
+                    <span id="err-ip-add-item-publisher" class="form-error-msg"></span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="form-group">
+                    <label for="add-item-edition">Edition:<span class="form-mandatory-input">*</span></label>
+                    <input type="text" maxlength="2" class="form-control validate-add" id="ip-add-item-edition"
+                      style="text-Transform:capitalize" placeholder="Edition">
+                    <span id="err-ip-add-item-edition" class="form-error-msg"></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-group">
+                    <label for="add-item-copies">Copies:<span class="form-mandatory-input">*</span></label>
+                    <input type="text" maxlength="2" class="form-control validate-add" id="ip-add-item-copies"
+                      style="text-Transform:capitalize" placeholder="Number of copies (max 10)">
+                    <span id="err-ip-add-item-copies" class="form-error-msg"></span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="form-group">
+                  <label for="lbl-add-item-image-btn">Icon: <input type='file' id="btn-add-item-image" /></label>
+                  <span id="err-btn-add-item-image" class="form-error-msg"></span>
+                  </div>
+                </td>
+                <td>
+                  <button type="button" class="btn-add-item" id="btn-add-item">Add</button>
+                </td>
+              </tr>
+            </table>           
+
+          </form>
+        </div>
       </div>
     </div>
     <script type='text/javascript' src='script.js'></script>
     <script>
       function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;  
+        var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
           tabcontent[i].style.display = "none";

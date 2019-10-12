@@ -49,15 +49,15 @@ document.getElementById("edit-modal-close").addEventListener("click", function (
 });
 
 document.getElementById("btn-edit-update").addEventListener("click", () => {
-  if(validateCopies(document.getElementById("ip-edit-item-copies"))){
-  let book_id = document.getElementById("edit-book-id").value;
-  itemArray.forEach((item) => {
-    if (book_id == item.id) {
-      item.updateCopies(document.getElementById("ip-edit-item-copies").value);
-      edit_modal.style.display = "none";
-    }
-  });
-  libObj.reset();
+  if (validateCopies(document.getElementById("ip-edit-item-copies"))) {
+    let book_id = document.getElementById("edit-book-id").value;
+    itemArray.forEach((item) => {
+      if (book_id == item.id) {
+        item.updateCopies(document.getElementById("ip-edit-item-copies").value);
+        edit_modal.style.display = "none";
+      }
+    });
+    libObj.reset();
   }
 });
 
@@ -65,15 +65,22 @@ document.getElementById("btn-edit-item-image").addEventListener("change", functi
   if (this.files && this.files[0]) {
     let edit_item_image = document.getElementById("edit-item-img")
     edit_item_image.src = URL.createObjectURL(this.files[0]);
-  
+
     let book_id = document.getElementById("edit-book-id").value;
     itemArray.forEach((item) => {
-    if (book_id == item.id) {
-      item.updateImage(document.getElementById("edit-item-img").src);
-     
-    }
+      if (book_id == item.id) {
+        item.updateImage(document.getElementById("edit-item-img").src);
+
+      }
     });
 
+  }
+});
+
+document.getElementById("btn-add-item-image").addEventListener("change", function () {
+  if (this.files && this.files[0]) {
+    let edit_item_image = document.getElementById("add-item-img")
+    edit_item_image.src = URL.createObjectURL(this.files[0]);
   }
 });
 
@@ -82,18 +89,86 @@ document.getElementById("ip-edit-item-copies").addEventListener("input", functio
 
 });
 
-function validateCopies(element)
-{
+document.getElementById("ip-add-item-name").addEventListener("input", function () {
+  validateAlphaNumInput(this, errMsg.ip_alpha_num_invalid);
+});
 
-   if( validateNumber(element, errMsg.ip_edit_item_copies_invalid_char))
-  {
-    if(element.value<1 || element.value>10)
+document.getElementById("ip-add-item-author").addEventListener("input", function () {
+  validateCharInput(this, errMsg.ip_char_invalid);
+});
+
+
+document.getElementById("ip-add-item-publisher").addEventListener("input", function () {
+  validateAlphaNumInput(this, errMsg.ip_alpha_num_invalid);
+});
+
+document.getElementById("ip-add-item-edition").addEventListener("input", function () {
+  validateAlphaNumInput(this, errMsg.ip_alpha_num_invalid);
+});
+
+document.getElementById("ip-add-item-copies").addEventListener("input", function () {
+  validateCopies(this);
+});
+
+document.getElementById("btn-add-item").addEventListener("click", function () {
+  validateAddItem();
+});
+
+function validateAddItem(){
+  
+  var element = document.getElementsByClassName("validate-add");
+  var i;
+  var success = true;
+  for (i = 0; i < element.length; i++) {
+
+    if (element[i].value == '') {
+      document.getElementById("err-" + element[i].id).innerHTML = errMsg.mandatory;
+      displayErrSpan(element[i], "block", errMsg.mandatory);
+      success = false;
+
+    }
+   /* else if (element[i].id == "add-item-img") {
+      if(element[i].src=="resources/images/User_Avatar-512.png")
     {
+      document.getElementById("err-btn-add-item-image").innerHTML = errMsg.mandatory;
+      displayErrSpan(ocument.getElementById("btn-add-item-image"), "block", errMsg.mandatory);
+      success = false; }
+   }*/
+    else if (element[i].id === "ip-add-item-name") {
+      if (!  validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
+   }
+    else if (element[i].id === "ip-add-item-author") {
+      if (! validateCharInput(element[i], errMsg.ip_char_invalid)) { success = false; }
+    }
+    else if (element[i].id === "ip-add-item-publisher") {
+      if (!  validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
+    }
+    else if (element[i].id === "ip-add-item-edition") {
+      if (!  validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
+    }
+    else if (element[i].id === "ip-add-item-copies") {
+      if (! validateCopies(element[i])) { success = false; }
+    }
+  
+  
+  }
+  if(success)
+  {
+    libObj.addItem();
+
+  }
+
+}
+
+function validateCopies(element) {
+
+  if (validateNumber(element, errMsg.ip_edit_item_copies_invalid_char)) {
+    if (element.value < 1 || element.value > 10) {
       return displayErrSpan(element, "block", errMsg.ip_edit_item_copies_invalid);
-    }else{
+    } else {
       return displayErrSpan(element, "none", "");
     }
-  }else{
+  } else {
     return displayErrSpan(element, "block", errMsg.ip_edit_item_copies_invalid_char);
   }
 
@@ -129,6 +204,20 @@ function validateAdminUser(element) {
 
 function validateCharInput(element, errMsg) {
   var letters = /^[ a-z]*$/i;
+  //this.value=this.value.trim();
+  if (!element.value.match(letters)) {
+    return displayErrSpan(element, "block", errMsg);
+
+  }
+  else {
+    return displayErrSpan(element, "none", "");
+
+  }
+
+}
+
+function validateAlphaNumInput(element, errMsg) {
+  var letters = /^[ a-zA-Z0-9]*$/i;
   //this.value=this.value.trim();
   if (!element.value.match(letters)) {
     return displayErrSpan(element, "block", errMsg);
@@ -229,11 +318,11 @@ function login() {
     modal.style.display = "none";
   }
 }
-function setParameters()
-{
+function setParameters() {
   if (admin) {
     document.getElementById("disp-ip-user-name").innerHTML = user_profile.user1.user_disp_name;
     document.getElementById("disp-ip-user-birth-year").innerHTML = "Admin";
+    document.getElementById("btn-add-items").click();
     var all = document.getElementsByClassName('admin');
     for (var i = 0; i < all.length; i++) {
       all[i].style.display = "block";
@@ -245,6 +334,7 @@ function setParameters()
 
   }
   else {
+   
     var all = document.getElementsByClassName("admin");
     for (var i = 0; i < all.length; i++) {
       all[i].style.display = "none";
@@ -268,6 +358,7 @@ function logout() {
 }
 const errMsg = {
   mandatory: "Mandatory Field.",
+  ip_char_invalid:  "Only alphabets are allowed.",
   ip_user_name_mandatory: "Name is mandatory.",
   ip_user_name_invalid: "Only alphabets are allowed.",
   ip_user_email_mandatory: "Email id is mandatory.",
@@ -277,6 +368,7 @@ const errMsg = {
   ip_user_birth_year_invalid: "Please enter a valid Year of Birth between 1900 and Current Year.",
   ip_edit_item_copies_invalid_char: "Only digits allowed.",
   ip_edit_item_copies_invalid: "Please enter number of copies between 1 and 10 (inclusive).",
+  ip_alpha_num_invalid: "Should only contain alphabets and Numbers."
 };
 
 const user_profile = {
@@ -341,22 +433,22 @@ class library {
 
     let count = 0;
     for (count = 0; count < itemArray.length; count++) {
-      if(this.itemArray[count].active){
-      let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
-      htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
-      htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
-      htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
-      htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
-      htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
-      htmlText = htmlText.concat("<b>Type:</b> " + itemArray[count].type + "    ");
-      htmlText = htmlText.concat("<b>Copies:</b> " + itemArray[count].copies + "</p>");
-      htmlText = htmlText.concat("<button class=\"btn-add-to-cart non-admin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
-      htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"editItem('" + itemArray[count].id + "')\">Edit</button>");
-      htmlText = htmlText.concat("<button class=\"btn-delete admin\" id=\"btn-delete\" onclick=\"deleteItem('" + itemArray[count].id + "')\">Delete</button>");
-      htmlText = htmlText.concat("</div>");
+      if (this.itemArray[count].active) {
+        let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
+        htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
+        htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
+        htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
+        htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
+        htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
+        htmlText = htmlText.concat("<b>Type:</b> " + itemArray[count].type + "    ");
+        htmlText = htmlText.concat("<b>Copies:</b> " + itemArray[count].copies + "</p>");
+        htmlText = htmlText.concat("<button class=\"btn-add-to-cart non-admin\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
+        htmlText = htmlText.concat("<button class=\"btn-edit admin\" id=\"btn-edit\" onclick=\"editItem('" + itemArray[count].id + "')\">Edit</button>");
+        htmlText = htmlText.concat("<button class=\"btn-delete admin\" id=\"btn-delete\" onclick=\"deleteItem('" + itemArray[count].id + "')\">Delete</button>");
+        htmlText = htmlText.concat("</div>");
 
-      let available_items = document.getElementById("available-items");
-      available_items.insertAdjacentHTML("beforeend", htmlText);
+        let available_items = document.getElementById("available-items");
+        available_items.insertAdjacentHTML("beforeend", htmlText);
       }
     }
 
@@ -407,7 +499,7 @@ class library {
           htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
           htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
           htmlText = htmlText.concat("<b>Type:</b> " + itemArray[count].type + "    ");
-          htmlText = htmlText.concat("<b>Copies:</b> " + itemArray[count].copies + "</p>");          
+          htmlText = htmlText.concat("<b>Copies:</b> " + itemArray[count].copies + "</p>");
           htmlText = htmlText.concat("<button class=\"btn-add-to-cart\" id=\"btn-add-to-cart\" onclick=\"addTocart('" + itemArray[count].id + "')\">Add to Cart</button>");
           htmlText = htmlText.concat("</div>");
 
@@ -453,7 +545,29 @@ class library {
         break;
       }
     }
-   // this.reset();
+    // this.reset();
+  }
+  addItem()
+  {    
+    let itemObj=new item("99",
+    document.getElementById("ip-add-item-name").value,
+    document.getElementById("ip-add-item-publisher").value,
+    document.getElementById("ip-add-item-author").value,
+    document.getElementById("ip-add-item-edition").value,
+    document.getElementById("ip-add-item-copies").value,
+    document.getElementById("ip-add-item-name").value,
+    document.getElementById("add-item-img").src);
+
+    this.itemArray.push(itemObj);
+    libObj.reset();
+    var all = document.getElementsByClassName('validate-add');
+    for (var i = 0; i < all.length; i++) {
+      all[i].value = "";
+    }
+    document.getElementById("btn-add-item-image").value="";
+    document.getElementById("add-item-img").src="resources/images/User_Avatar-512.png";
+
+    
   }
 
 }
