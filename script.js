@@ -52,18 +52,31 @@ document.getElementById("btn-edit-update").addEventListener("click", () => {
   let book_id = document.getElementById("edit-book-id").value;
   itemArray.forEach((item) => {
     if (book_id == item.id) {
-      item.updateItem(document.getElementById("ip-edit-item-copies").value);
+      item.updateCopies(document.getElementById("ip-edit-item-copies").value);
       edit_modal.style.display = "none";
     }
   });
+  libObj.reset();
 });
 
 document.getElementById("btn-edit-item-image").addEventListener("change", function () {
   if (this.files && this.files[0]) {
     let edit_item_image = document.getElementById("edit-item-img")
     edit_item_image.src = URL.createObjectURL(this.files[0]);
+  
+    let book_id = document.getElementById("edit-book-id").value;
+    itemArray.forEach((item) => {
+    if (book_id == item.id) {
+      item.updateImage(document.getElementById("edit-item-img").src);
+     
+    }
+    });
 
   }
+
+
+
+
 });
 
 function validateBirthYear(element) {
@@ -193,31 +206,6 @@ function login() {
 
   if (success) {
     setParameters();
-    /*if (admin) {
-      document.getElementById("disp-ip-user-name").innerHTML = user_profile.user1.user_disp_name;
-      document.getElementById("disp-ip-user-birth-year").innerHTML = "Admin";
-      var all = document.getElementsByClassName('admin');
-      for (var i = 0; i < all.length; i++) {
-        all[i].style.display = "block";
-      }
-      all = document.getElementsByClassName("non-admin");
-      for (var i = 0; i < all.length; i++) {
-        all[i].style.display = "none";
-      }
-
-    }
-    else {
-      var all = document.getElementsByClassName("admin");
-      for (var i = 0; i < all.length; i++) {
-        all[i].style.display = "none";
-      }
-      all = document.getElementsByClassName("non-admin");
-      for (var i = 0; i < all.length; i++) {
-        all[i].style.display = "block";
-      }
-
-
-    }*/
     modal.style.display = "none";
   }
 }
@@ -291,8 +279,11 @@ class item {
     this.active = true;
   }
 
-  updateItem(copies) {
+  updateCopies(copies) {
     this.copies = copies;
+  }
+  updateImage(image) {
+    this.image = image;
   }
 }
 
