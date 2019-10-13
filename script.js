@@ -489,7 +489,7 @@ let itemArray = new Array(new item("1", "Book", "Clean Code: A Handbook of Agile
   new item("10", "CD", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg")
 );
 
-
+let cart=new Array();
 
 
 
@@ -516,7 +516,7 @@ class library {
 
     let count = 0;
     for (count = 0; count < itemArray.length; count++) {
-      if (this.itemArray[count].active) {
+     // if (this.itemArray[count].active) {
         let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
         htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
         htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
@@ -532,7 +532,7 @@ class library {
 
         let available_items = document.getElementById("available-items");
         available_items.insertAdjacentHTML("beforeend", htmlText);
-      }
+     // }
     }
 
     setParameters();
@@ -575,6 +575,8 @@ class library {
 
         let basket = document.getElementById("basket");
         basket.insertAdjacentHTML("afterbegin", htmlText);
+
+        cart.push(this.itemArray[count]);
         break;
       }
     }
@@ -582,6 +584,13 @@ class library {
 
   removeFromCart(itemId) {
     let count = 0;
+
+    for (count = 0; count < cart.length; count++) {
+      if (cart[count].id == itemId) {
+        cart.splice(count, 1);
+    }
+  }
+
     for (count = 0; count < this.itemArray.length; count++) {
       if (this.itemArray[count].id == itemId) {
         this.itemArray[count].copies++;
@@ -606,8 +615,9 @@ class library {
 
         let removeObj = document.getElementById("divIdBasket" + this.itemArray[count].id);
         removeObj.remove();
+        break;
       }
-      break;
+     
     }
   }
   editItem(itemId) {
@@ -643,14 +653,15 @@ class library {
   }
   addItem() {
     let itemObj = new item("99",
+      document.getElementById("ip-add-item-type").value,
       document.getElementById("ip-add-item-name").value,
       document.getElementById("ip-add-item-publisher").value,
       document.getElementById("ip-add-item-author").value,
       document.getElementById("ip-add-item-edition").value,
       document.getElementById("ip-add-item-copies").value,
-      document.getElementById("ip-add-item-name").value,
       document.getElementById("add-item-img").src);
 
+     
     this.itemArray.push(itemObj);
     libObj.reset();
     var all = document.getElementsByClassName('validate-add');
