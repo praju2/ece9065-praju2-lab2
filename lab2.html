@@ -98,6 +98,41 @@
         </div>
       </div>
     </div>
+    <div id="due-date-modal" class="modal due-date-modal">
+        <!-- Modal content -->
+        <div class="modal-content due-date-modal-content">
+          <div class="modal-header">
+            <span class="close" id="due-date-modal-close">&times;</span>
+            <h2>Change Due Date</h2>
+          </div>
+          <div class="modal-body">
+            <div id="due-date-item" class="due-date-items">
+            <form>
+
+
+                 <div class="form-group">
+                  <label for="lbl-due-date-book"> Number of Days(Book):<span class="form-mandatory-input">*</span></label><br/>
+                  <input type="text" maxlength="2" class="form-control validate-due-date" id="ip-due-date-book"
+                    placeholder="Number of Days (Max 99)">
+                  <span id="err-ip-due-date-book" class="form-error-msg"></span>
+                </div>
+                <div class="form-group">
+                    <label for="lbl-due-date-cd"> Number of Days(CD):<span class="form-mandatory-input">*</span></label><br/>
+                    <input type="text" maxlength="2" class="form-control validate-due-date" id="ip-due-date-cd"
+                      placeholder="Number of Days (Max 99)">
+                    <span id="err-ip-due-date-cd" class="form-error-msg"></span>
+                  </div>
+                <button type="button" class="btn-due-date-update" id="btn-due-date-update">Update</button>
+              
+  
+            </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+
     <div class="sub-container1">
       <h1>Library Checkout</h1>
       <div class="tab">
@@ -109,6 +144,8 @@
           id="btn-add-items">Add Items</button>
         <button class="tablinks admin" onclick="openTab(event, 'available-items')" style="display: none;"
           id="btn-edit-delete-items">Edit/Delete Items</button>
+          <button class="tablinks admin"  style="display: none;"
+          id="btn-due-date">Change Due Date</button>
       </div>
       <div id="available-items" class="tabcontent">
 
@@ -196,8 +233,7 @@
         </div>
       </div>
     </div>
-    <script type='text/javascript' src='script.js'></script>
-    <script>
+        <script>
       function openTab(evt, tabName) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -212,9 +248,10 @@
         evt.currentTarget.className += " active";
       }
 
-      document.getElementById("btn-items-available").click();
+      //document.getElementById("btn-items-available").click();
 
     </script>
+    <script type='text/javascript' src='script.js'></script>
   </div>
 </body>
 

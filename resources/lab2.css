@@ -39,6 +39,9 @@ td{
 .edit-modal-content .form-control {
   width:15%;
 }
+.due-date-modal-content .form-control {
+  width:100%;
+ }
 
 
 /*button.btn-user-log-in {
@@ -177,7 +180,7 @@ button.btn-user-log-in {
   left: 72%;
 }
 
-  button.btn-edit-update,.btn-add-item {
+  button.btn-edit-update,.btn-add-item,.btn-due-date-update {
   background-color:  #561b8d;
   color: white;
   padding: 6px 12px;
@@ -186,6 +189,10 @@ button.btn-user-log-in {
   position: relative;
   left : 18%;
   margin: 15px 15px;
+}
+
+button.btn-due-date-update {
+  width:50%;
 }
 
 .admin{
@@ -228,6 +235,10 @@ header{
   background-color: rgba(0,0,0, 0.9); 
   animation-name: fadeIn;
 }
+.due-date-modal{
+  background-color: rgba(0,0,0, 0.9); 
+  animation-name: fadeIn;
+}
 
   /* Modal Content */
 .modal-content {
@@ -255,6 +266,16 @@ header{
   
 
 }
+.due-date-modal-content{
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  background-color: #fefefe;
+  width: 20%;
+  height: 35%;
+  animation-name: fadeIn;
+  
+
+}
   
   /* The Close Button */
   .close {
@@ -265,6 +286,10 @@ header{
     font-weight: bold;
   }
   .edit-modal .close {
+    display: block; 
+  }
+
+ .due-date-modal .close {
     display: block; 
   }
   

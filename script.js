@@ -1,8 +1,24 @@
 var currentYear = new Date().getFullYear();
 let admin = false;
+let due_date_book = 30;
+let due_date_cd = 10;
 var modal = document.getElementById("login-modal");
 let edit_modal = document.getElementById("edit-modal");
+let due_date_modal = document.getElementById("due-date-modal");
 
+
+
+Date.prototype.addDays = function (days) { //Stackover flow
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+var date = new Date();
+
+
+let computed_due_date_book= date.addDays(due_date_book);
+let computed_due_date_CD= date.addDays(due_date_cd);
 
 modal.style.display = "block";
 
@@ -33,6 +49,26 @@ document.getElementById("ip-user-name").addEventListener("input", function () {
   validateCharInput(this, errMsg.ip_user_name_invalid);
 });
 
+document.getElementById("ip-due-date-book").addEventListener("input", function () {
+  validateDueDate(this, errMsg.ip_digit_invalid)
+
+});
+document.getElementById("ip-due-date-cd").addEventListener("input", function () {
+  validateDueDate(this, errMsg.ip_digit_invalid)
+});
+
+function validateDueDate(element, errorMsg) {
+  if (validateNumber(element, errorMsg)) {
+    if (element.value < 1 || element.value > 99) {
+      return displayErrSpan(element, "block", errMsg.ip_due_date_invalid);
+    } else {
+      return displayErrSpan(element, "none", "");
+    }
+  } else {
+    return false;
+  }
+}
+
 document.getElementById("ip-user-name").addEventListener("change", function () {
   validateBirthYear(document.getElementById("ip-user-birth-year"));
 });
@@ -44,8 +80,47 @@ document.getElementById("ip-user-birth-year").addEventListener("input", function
 });
 document.getElementById("btn-user-log-in").addEventListener("click", login);
 
+document.getElementById("btn-due-date-update").addEventListener("click", validateDueDateBtn);
+
+function validateDueDateBtn() {
+
+  var element = document.getElementsByClassName("validate-due-date");
+  var i;
+  var success = true;
+  for (i = 0; i < element.length; i++) {
+
+    if (element[i].value == '') {
+      document.getElementById("err-" + element[i].id).innerHTML = errMsg.mandatory;
+      displayErrSpan(element[i], "block", errMsg.mandatory);
+      success = false;
+
+    }
+    else if (element[i].id === "ip-due-date-book") {
+      if (!validateDueDate(element[i], errMsg.ip_digit_invalid)) { success = false; }
+    }
+    else if (element[i].id === "ip-due-date-cd") {
+      if (!validateDueDate(element[i], errMsg.ip_digit_invalid)) { success = false; }
+    }
+
+  }
+  if (success) {
+    libObj.updateDueDate();
+  }
+}
+
+
 document.getElementById("edit-modal-close").addEventListener("click", function () {
   edit_modal.style.display = "none";
+});
+
+document.getElementById("btn-due-date").addEventListener("click", function () {
+  document.getElementById("ip-due-date-book").value = due_date_book;
+  document.getElementById("ip-due-date-cd").value = due_date_cd;
+  due_date_modal.style.display = "block";
+});
+
+document.getElementById("due-date-modal-close").addEventListener("click", function () {
+  due_date_modal.style.display = "none";
 });
 
 document.getElementById("btn-edit-update").addEventListener("click", () => {
@@ -114,8 +189,8 @@ document.getElementById("btn-add-item").addEventListener("click", function () {
   validateAddItem();
 });
 
-function validateAddItem(){
-  
+function validateAddItem() {
+
   var element = document.getElementsByClassName("validate-add");
   var i;
   var success = true;
@@ -127,33 +202,32 @@ function validateAddItem(){
       success = false;
 
     }
-   /* else if (element[i].id == "add-item-img") {
-      if(element[i].src=="resources/images/User_Avatar-512.png")
-    {
-      document.getElementById("err-btn-add-item-image").innerHTML = errMsg.mandatory;
-      displayErrSpan(ocument.getElementById("btn-add-item-image"), "block", errMsg.mandatory);
-      success = false; }
-   }*/
+    /* else if (element[i].id == "add-item-img") {
+       if(element[i].src=="resources/images/User_Avatar-512.png")
+     {
+       document.getElementById("err-btn-add-item-image").innerHTML = errMsg.mandatory;
+       displayErrSpan(ocument.getElementById("btn-add-item-image"), "block", errMsg.mandatory);
+       success = false; }
+    }*/
     else if (element[i].id === "ip-add-item-name") {
-      if (!  validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
-   }
+      if (!validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
+    }
     else if (element[i].id === "ip-add-item-author") {
-      if (! validateCharInput(element[i], errMsg.ip_char_invalid)) { success = false; }
+      if (!validateCharInput(element[i], errMsg.ip_char_invalid)) { success = false; }
     }
     else if (element[i].id === "ip-add-item-publisher") {
-      if (!  validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
+      if (!validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
     }
     else if (element[i].id === "ip-add-item-edition") {
-      if (!  validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
+      if (!validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
     }
     else if (element[i].id === "ip-add-item-copies") {
-      if (! validateCopies(element[i])) { success = false; }
+      if (!validateCopies(element[i])) { success = false; }
     }
-  
-  
+
+
   }
-  if(success)
-  {
+  if (success) {
     libObj.addItem();
 
   }
@@ -322,7 +396,6 @@ function setParameters() {
   if (admin) {
     document.getElementById("disp-ip-user-name").innerHTML = user_profile.user1.user_disp_name;
     document.getElementById("disp-ip-user-birth-year").innerHTML = "Admin";
-    document.getElementById("btn-add-items").click();
     var all = document.getElementsByClassName('admin');
     for (var i = 0; i < all.length; i++) {
       all[i].style.display = "block";
@@ -331,10 +404,11 @@ function setParameters() {
     for (var i = 0; i < all.length; i++) {
       all[i].style.display = "none";
     }
+    document.getElementById("btn-edit-delete-items").click();
 
   }
   else {
-   
+
     var all = document.getElementsByClassName("admin");
     for (var i = 0; i < all.length; i++) {
       all[i].style.display = "none";
@@ -343,7 +417,7 @@ function setParameters() {
     for (var i = 0; i < all.length; i++) {
       all[i].style.display = "block";
     }
-
+    document.getElementById("btn-items-available").click();
 
   }
 
@@ -358,7 +432,8 @@ function logout() {
 }
 const errMsg = {
   mandatory: "Mandatory Field.",
-  ip_char_invalid:  "Only alphabets are allowed.",
+  ip_char_invalid: "Only alphabets are allowed.",
+  ip_digit_invalid: "Only digits allowed.",
   ip_user_name_mandatory: "Name is mandatory.",
   ip_user_name_invalid: "Only alphabets are allowed.",
   ip_user_email_mandatory: "Email id is mandatory.",
@@ -367,8 +442,9 @@ const errMsg = {
   ip_user_birth_year_invalid_char: "Only digits allowed.",
   ip_user_birth_year_invalid: "Please enter a valid Year of Birth between 1900 and Current Year.",
   ip_edit_item_copies_invalid_char: "Only digits allowed.",
-  ip_edit_item_copies_invalid: "Please enter number of copies between 1 and 10 (inclusive).",
-  ip_alpha_num_invalid: "Should only contain alphabets and Numbers."
+  ip_edit_item_copies_invalid: "Please enter number of copies between 1 and 10 (both inclusive).",
+  ip_alpha_num_invalid: "Should only contain alphabets and Numbers.",
+  ip_due_date_invalid: "Please enter number of days between 1 and 99 (both inclusive)."
 };
 
 const user_profile = {
@@ -410,7 +486,7 @@ let itemArray = new Array(new item("1", "Book", "Clean Code: A Handbook of Agile
   new item("7", "Book", "Long Walk to Freedom: The Autobiography of Nelson Mandela", "Publisher", "Nelson Mandela", "12th Edition", 1, "resources/images/Long Walk nelson.jpg"),
   new item("8", "Book", "The Audacity of Hope: Thoughts on Reclaiming the American Dream", "Publisher", "Barack Obama", "7th Edition", 1, "resources/images/Audacity Barack Obama.jpg"),
   new item("9", "Book", "An Autobiography: The Story of My Experiments with Truth", "Publisher", "Mahatma Gandhi", "9th Edition", 1, "resources/images/gandhi.jpg"),
-  new item("10", "Book", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg")
+  new item("10", "CD", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg")
 );
 
 
@@ -426,6 +502,13 @@ class library {
 
     let rootNode = document.getElementById("available-items");
     let childNode = rootNode.lastElementChild;
+    while (childNode) {
+      rootNode.removeChild(childNode);
+      childNode = rootNode.lastElementChild;
+    }
+
+    rootNode = document.getElementById("basket");
+    childNode = rootNode.lastElementChild;
     while (childNode) {
       rootNode.removeChild(childNode);
       childNode = rootNode.lastElementChild;
@@ -458,6 +541,9 @@ class library {
 
   addToCart(itemId) {
     let count = 0;
+    let due_date;
+
+
     for (count = 0; count < this.itemArray.length; count++) {
       if (this.itemArray[count].id == itemId && this.itemArray[count].active) {
         this.itemArray[count].copies--;
@@ -469,6 +555,13 @@ class library {
 
 
 
+        if (this.itemArray[count].type == "Book") {
+          due_date = computed_due_date_book;
+        } else {
+          due_date = computed_due_date_CD;
+        }
+
+
         let htmlText = "<div id=\"divIdBasket" + this.itemArray[count].id + "\" class=\"items\"\>";
         htmlText = htmlText.concat("<img alt=\"" + this.itemArray[count].name + "\" class=\"item_img\" src=\"" + this.itemArray[count].image + "\" />");
         htmlText = htmlText.concat("<h4>" + this.itemArray[count].name + "</h4> by ");
@@ -476,6 +569,7 @@ class library {
         htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
         htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
         htmlText = htmlText.concat("<b>Type:</b> " + itemArray[count].type + "    ");
+        htmlText = htmlText.concat("<b>Due Date:</b> " + due_date.toDateString() + "    ");
         htmlText = htmlText.concat("<button class=\"btn-add-to-cart\" id=\"btn-add-to-cart\" onclick=\"removeFromCart('" + itemArray[count].id + "')\">Remove from Cart</button>");
         htmlText = htmlText.concat("</div>");
 
@@ -547,16 +641,15 @@ class library {
     }
     // this.reset();
   }
-  addItem()
-  {    
-    let itemObj=new item("99",
-    document.getElementById("ip-add-item-name").value,
-    document.getElementById("ip-add-item-publisher").value,
-    document.getElementById("ip-add-item-author").value,
-    document.getElementById("ip-add-item-edition").value,
-    document.getElementById("ip-add-item-copies").value,
-    document.getElementById("ip-add-item-name").value,
-    document.getElementById("add-item-img").src);
+  addItem() {
+    let itemObj = new item("99",
+      document.getElementById("ip-add-item-name").value,
+      document.getElementById("ip-add-item-publisher").value,
+      document.getElementById("ip-add-item-author").value,
+      document.getElementById("ip-add-item-edition").value,
+      document.getElementById("ip-add-item-copies").value,
+      document.getElementById("ip-add-item-name").value,
+      document.getElementById("add-item-img").src);
 
     this.itemArray.push(itemObj);
     libObj.reset();
@@ -564,10 +657,20 @@ class library {
     for (var i = 0; i < all.length; i++) {
       all[i].value = "";
     }
-    document.getElementById("btn-add-item-image").value="";
-    document.getElementById("add-item-img").src="resources/images/User_Avatar-512.png";
+    document.getElementById("btn-add-item-image").value = "";
+    document.getElementById("add-item-img").src = "resources/images/User_Avatar-512.png";
 
-    
+
+  }
+  updateDueDate() {
+    date = new Date();
+   due_date_book =  Number(document.getElementById("ip-due-date-book").value);
+    computed_due_date_book = date.addDays(due_date_book);
+    due_date_cd = Number(document.getElementById("ip-due-date-cd").value);
+    computed_due_date_CD = date.addDays(due_date_cd);
+    due_date_modal.style.display = "none";
+    //this.reset();
+
   }
 
 }
