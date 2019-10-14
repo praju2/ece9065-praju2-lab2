@@ -4,9 +4,8 @@ let due_date_book = 30;
 let due_date_cd = 10;
 var modal = document.getElementById("login-modal");
 let edit_modal = document.getElementById("edit-modal");
+let checkout_modal = document.getElementById("checkout-modal");
 let due_date_modal = document.getElementById("due-date-modal");
-
-
 
 Date.prototype.addDays = function (days) { //Stackover flow
   var date = new Date(this.valueOf());
@@ -80,6 +79,13 @@ document.getElementById("ip-user-birth-year").addEventListener("input", function
 });
 document.getElementById("btn-user-log-in").addEventListener("click", login);
 
+document.getElementById("btn-checkout").addEventListener("click", ()=>{
+  libObj.displayCheckout();
+ 
+
+});
+
+
 document.getElementById("btn-due-date-update").addEventListener("click", validateDueDateBtn);
 
 function validateDueDateBtn() {
@@ -112,6 +118,21 @@ function validateDueDateBtn() {
 document.getElementById("edit-modal-close").addEventListener("click", function () {
   edit_modal.style.display = "none";
 });
+
+document.getElementById("checkout-close").addEventListener("click", function () {
+  checkout_modal.style.display = "none";
+});
+
+document.getElementById("btn-checkout-items-cancel").addEventListener("click", function () {
+  checkout_modal.style.display = "none";
+});
+
+document.getElementById("btn-checkout-items-ok").addEventListener("click", function () {
+  libObj.checkout();
+ 
+});
+
+
 
 document.getElementById("btn-due-date").addEventListener("click", function () {
   document.getElementById("ip-due-date-book").value = due_date_book;
@@ -508,15 +529,34 @@ class library {
     }
 
     rootNode = document.getElementById("basket");
-    childNode = rootNode.lastElementChild;
-    while (childNode) {
+    childNode = rootNode.firstElementChild;
+  
+     while (childNode && childNode.id!="div-checkout-btn") {     
       rootNode.removeChild(childNode);
-      childNode = rootNode.lastElementChild;
+      childNode = rootNode.firstElementChild;
+    }
+    let count = 0;
+    if(cart.length>0)
+    {
+      cart.forEach((item)=>{
+        for (count = 0; count < itemArray.length; count++) {
+          if(item.id==itemArray[count].id)
+          {
+            itemArray[count].copies++;
+            itemArray[count].active=true;
+            break;
+          }
+        }
+
+
+      }      
+      )
+    cart=new Array();
     }
 
-    let count = 0;
+   
     for (count = 0; count < itemArray.length; count++) {
-     // if (this.itemArray[count].active) {
+      if (this.itemArray[count].active) {
         let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
         htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
         htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
@@ -532,7 +572,12 @@ class library {
 
         let available_items = document.getElementById("available-items");
         available_items.insertAdjacentHTML("beforeend", htmlText);
-     // }
+      }
+    }
+
+    if(cart.length<=0)
+    {
+      document.getElementById("btn-checkout").style.display="none";
     }
 
     setParameters();
@@ -589,6 +634,10 @@ class library {
       if (cart[count].id == itemId) {
         cart.splice(count, 1);
     }
+  }
+  if(cart.length<=0)
+  {
+    document.getElementById("btn-checkout").style.display="none";
   }
 
     for (count = 0; count < this.itemArray.length; count++) {
@@ -683,6 +732,86 @@ class library {
     //this.reset();
 
   }
+
+displayCheckout()
+{
+  let count = 0;
+  let due_date;
+
+  let rootNode = document.getElementById("checkout-items");
+  let childNode = rootNode.firstElementChild;
+
+   while (childNode && childNode.id!="div-checkout-items-btn") {     
+    rootNode.removeChild(childNode);
+    childNode = rootNode.firstElementChild;
+  }
+
+
+  for (count = 0; count < cart.length; count++) {
+
+
+    
+    if (cart[count].type == "Book") {
+      due_date = computed_due_date_book;
+    } else {
+      due_date = computed_due_date_CD;
+    }
+      let htmlText = "<div id=\"divIdCheckout" + cart[count].id + "\" class=\"items\"\>";
+      htmlText = htmlText.concat("<h4>" + cart[count].name + "</h4> by ");
+      htmlText = htmlText.concat("<h5>" + cart[count].author + "</h5><br/>");
+      htmlText = htmlText.concat("<b>Type:</b> " + cart[count].type + "    ");
+      htmlText = htmlText.concat("<b>Due Date:</b> " + due_date.toDateString() + "    ");
+      htmlText = htmlText.concat("</div>");
+
+      let checkout_items = document.getElementById("checkout-items");
+      checkout_items.insertAdjacentHTML("afterbegin", htmlText);
+  }
+
+  document.getElementById("checkout-total-items").innerHTML=count;
+  
+  checkout_modal.style.display="block";
+}
+
+checkout(){
+
+  checkout_modal.style.display = "none";
+  let rootNode = document.getElementById("checkout-items");
+  let childNode = rootNode.firstElementChild;
+
+   while (childNode && childNode.id!="div-checkout-items-btn") {     
+    rootNode.removeChild(childNode);
+    childNode = rootNode.firstElementChild;
+  }
+  document.getElementById("checkout-total-items").innerHTML=0;
+  
+  rootNode = document.getElementById("basket");
+  childNode = rootNode.firstElementChild;
+
+   while (childNode && childNode.id!="div-checkout-btn") {     
+    rootNode.removeChild(childNode);
+    childNode = rootNode.firstElementChild;
+  }
+
+let count=0;
+  cart.forEach((item)=>{
+    for (count = 0; count < itemArray.length; count++) {
+
+      if(item.id==itemArray[count].id)
+      {
+        itemArray.splice(count, 1);
+        break;
+      }
+    }
+
+
+  }); 
+  
+  cart= new Array();
+  document.getElementById("btn-items-available").click();
+
+
+
+}
 
 }
 

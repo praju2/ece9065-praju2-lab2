@@ -49,7 +49,7 @@
             <div class="form-group">
               <label for="usr">Year of birth:<span class="form-mandatory-input">*</span></label>
               <input type="text" class="form-control validate-login" id="ip-user-birth-year"
-                placeholder="YYYY (1900 - Current Year)">
+                placeholder="YYYY (1900 - Current Year)" maxlength="4">
               <span id="err-ip-user-birth-year" class="form-error-msg"></span>
             </div>
             <button type="button" class="btn-user-log-in" id="btn-user-log-in">Log In</button>
@@ -99,65 +99,99 @@
       </div>
     </div>
     <div id="due-date-modal" class="modal due-date-modal">
-        <!-- Modal content -->
-        <div class="modal-content due-date-modal-content">
-          <div class="modal-header">
-            <span class="close" id="due-date-modal-close">&times;</span>
-            <h2>Change Due Date</h2>
-          </div>
-          <div class="modal-body">
-            <div id="due-date-item" class="due-date-items">
+      <!-- Modal content -->
+      <div class="modal-content due-date-modal-content">
+        <div class="modal-header">
+          <span class="close" id="due-date-modal-close">&times;</span>
+          <h2>Change Due Date</h2>
+        </div>
+        <div class="modal-body">
+          <div id="due-date-item" class="due-date-items">
             <form>
 
 
-                 <div class="form-group">
-                  <label for="lbl-due-date-book"> Number of Days(Book):<span class="form-mandatory-input">*</span></label><br/>
-                  <input type="text" maxlength="2" class="form-control validate-due-date" id="ip-due-date-book"
-                    placeholder="Number of Days (Max 99)">
-                  <span id="err-ip-due-date-book" class="form-error-msg"></span>
-                </div>
-                <div class="form-group">
-                    <label for="lbl-due-date-cd"> Number of Days(CD):<span class="form-mandatory-input">*</span></label><br/>
-                    <input type="text" maxlength="2" class="form-control validate-due-date" id="ip-due-date-cd"
-                      placeholder="Number of Days (Max 99)">
-                    <span id="err-ip-due-date-cd" class="form-error-msg"></span>
-                  </div>
-                <button type="button" class="btn-due-date-update" id="btn-due-date-update">Update</button>
-              
-  
+              <div class="form-group">
+                <label for="lbl-due-date-book"> Number of Days(Book):<span
+                    class="form-mandatory-input">*</span></label><br />
+                <input type="text" maxlength="2" class="form-control validate-due-date" id="ip-due-date-book"
+                  placeholder="Number of Days (Max 99)">
+                <span id="err-ip-due-date-book" class="form-error-msg"></span>
+              </div>
+              <div class="form-group">
+                <label for="lbl-due-date-cd"> Number of Days(CD):<span
+                    class="form-mandatory-input">*</span></label><br />
+                <input type="text" maxlength="2" class="form-control validate-due-date" id="ip-due-date-cd"
+                  placeholder="Number of Days (Max 99)">
+                <span id="err-ip-due-date-cd" class="form-error-msg"></span>
+              </div>
+              <button type="button" class="btn-due-date-update" id="btn-due-date-update">Update</button>
+
+
             </form>
-            </div>
-          </div>
-          <div class="modal-footer">
           </div>
         </div>
+        <div class="modal-footer">
+        </div>
       </div>
+    </div>
+    <div id="checkout-modal" class="modal checkout-modal">
+      <!-- Modal content -->
+      <div class="modal-content checkout-modal-content">
+        <div class="modal-header">
+          <span class="close" id="checkout-close">&times;</span>
+          <h2>Checkout</h2>
+        </div>
+        <div class="modal-body">
+          <div id="checkout-items" class="checkout-items">
+            
+                         
+
+          </div>
+        </div>
+        <div class="modal-footer">
+            <div id="div-checkout-items-btn" class="div-checkout-items-btn">
+                <b><p>Total Number of Items: <span id="checkout-total-items"></span></p></b>
+                  <form>
+                    <button type="button" class="btn-checkout-items btn-checkout-items-ok" id="btn-checkout-items-ok">OK</button>
+                    <button type="button" class="btn-checkout-items btn-checkout-items-cancel" id="btn-checkout-items-cancel">Cancel</button>
+                   </form> 
+                </div>     
+        </div>
+      </div>
+    </div>
+
 
     <div class="sub-container1">
       <h1>Library Checkout</h1>
       <div class="tab">
         <button class="tablinks non-admin" onclick="openTab(event, 'available-items')" id="btn-items-available">Items
           Available</button>
-        <button class="tablinks non-admin" onclick="openTab(event, 'basket')" id="btn-checkout-list">Checkout
+        <button class="tablinks non-admin" onclick="openTab(event, 'main-basket')" id="btn-checkout-list">Checkout
           List</button>
         <button class="tablinks admin" onclick="openTab(event, 'add-items')" style="display: none;"
           id="btn-add-items">Add Items</button>
         <button class="tablinks admin" onclick="openTab(event, 'available-items')" style="display: none;"
           id="btn-edit-delete-items">Edit/Delete Items</button>
-          <button class="tablinks admin"  style="display: none;"
-          id="btn-due-date">Change Due Date</button>
+        <button class="tablinks admin" style="display: none;" id="btn-due-date">Change Due Date</button>
       </div>
       <div id="available-items" class="tabcontent">
 
       </div>
-      <div id="basket" class="tabcontent">
+      <div id="main-basket" class="tabcontent">
+      <div id="basket" class="basket">
       </div>
+      <div id="div-checkout-btn" class="div-checkout-btn">
+          <form>
+            <button type="button" class="btn-checkout" id="btn-checkout">Checkout</button>
+           </form> 
+        </div>
+    </div>
       <div id="add-items" class="tabcontent">
         <div class="sub-container2">
 
           <form>
             <div class="add-item-image">
-              <img alt="" class="item_img" src="resources/images/User_Avatar-512.png" id="add-item-img" />           
+              <img alt="" class="item_img" src="resources/images/User_Avatar-512.png" id="add-item-img" />
             </div>
             <table class="table" width="70%">
               <tr>
@@ -219,22 +253,34 @@
               <tr>
                 <td>
                   <div class="form-group">
-                  <label for="lbl-add-item-image-btn">Icon: <input type='file' id="btn-add-item-image" /></label>
-                  <span id="err-btn-add-item-image" class="form-error-msg"></span>
+                    <label for="lbl-add-item-image-btn">Icon: <input type='file' id="btn-add-item-image" /></label>
+                    <span id="err-btn-add-item-image" class="form-error-msg"></span>
                   </div>
                 </td>
                 <td>
                   <button type="button" class="btn-add-item" id="btn-add-item">Add</button>
                 </td>
               </tr>
-            </table>           
+            </table>
 
           </form>
         </div>
       </div>
     </div>
-        <script>
+    <script>
       function openTab(evt, tabName) {
+
+        if (tabName=="main-basket")
+        {
+          if(cart.length>0)
+          {
+            document.getElementById("btn-checkout").style.display="block";
+
+          }else
+          {
+            document.getElementById("btn-checkout").style.display="none";
+          }
+        }
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
