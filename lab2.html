@@ -18,7 +18,9 @@
           style="text-Transform:capitalize"></span></label>
       <label for="lbl-user-email">(<span id="disp-ip-user-email" class="disp-text"></span>)</label>
       <label for="lbl-user-birth-year">[<span id="disp-ip-user-birth-year" class="disp-text"></span>]</label><br />
+      <a id="lang_en">En</a>/<a id="lang_fr">Fr</a><br />
       <label for="lbl-user-log-out"><a href="#Logout" onClick="logout();">Logout</a></label>
+
     </div>
   </header>
   <div class="nav-bar"></div>
@@ -143,19 +145,23 @@
         </div>
         <div class="modal-body">
           <div id="checkout-items" class="checkout-items">
-            
-                         
+
+
 
           </div>
         </div>
         <div class="modal-footer">
-            <div id="div-checkout-items-btn" class="div-checkout-items-btn">
-                <b><p>Total Number of Items: <span id="checkout-total-items"></span></p></b>
-                  <form>
-                    <button type="button" class="btn-checkout-items btn-checkout-items-ok" id="btn-checkout-items-ok">OK</button>
-                    <button type="button" class="btn-checkout-items btn-checkout-items-cancel" id="btn-checkout-items-cancel">Cancel</button>
-                   </form> 
-                </div>     
+          <div id="div-checkout-items-btn" class="div-checkout-items-btn">
+            <b>
+              <p>Total Number of Items: <span id="checkout-total-items"></span></p>
+            </b>
+            <form>
+              <button type="button" class="btn-checkout-items btn-checkout-items-ok"
+                id="btn-checkout-items-ok">OK</button>
+              <button type="button" class="btn-checkout-items btn-checkout-items-cancel"
+                id="btn-checkout-items-cancel">Cancel</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -178,14 +184,14 @@
 
       </div>
       <div id="main-basket" class="tabcontent">
-      <div id="basket" class="basket">
-      </div>
-      <div id="div-checkout-btn" class="div-checkout-btn">
+        <div id="basket" class="basket">
+        </div>
+        <div id="div-checkout-btn" class="div-checkout-btn">
           <form>
             <button type="button" class="btn-checkout" id="btn-checkout">Checkout</button>
-           </form> 
+          </form>
         </div>
-    </div>
+      </div>
       <div id="add-items" class="tabcontent">
         <div class="sub-container2">
 
@@ -244,8 +250,8 @@
                 <td>
                   <div class="form-group">
                     <label for="add-item-copies">Copies:<span class="form-mandatory-input">*</span></label>
-                    <input type="text" maxlength="2" class="form-control validate-add" id="ip-add-item-copies"
-                      style="text-Transform:capitalize" placeholder="Number of copies (max 10)">
+                    <input type="text" maxlength="1" class="form-control validate-add" id="ip-add-item-copies"
+                      style="text-Transform:capitalize" placeholder="# of copies restricted to 1 for Beta Version">
                     <span id="err-ip-add-item-copies" class="form-error-msg"></span>
                   </div>
                 </td>
@@ -270,15 +276,12 @@
     <script>
       function openTab(evt, tabName) {
 
-        if (tabName=="main-basket")
-        {
-          if(cart.length>0)
-          {
-            document.getElementById("btn-checkout").style.display="block";
+        if (tabName == "main-basket") {
+          if (cart.length > 0) {
+            document.getElementById("btn-checkout").style.display = "block";
 
-          }else
-          {
-            document.getElementById("btn-checkout").style.display="none";
+          } else {
+            document.getElementById("btn-checkout").style.display = "none";
           }
         }
         var i, tabcontent, tablinks;

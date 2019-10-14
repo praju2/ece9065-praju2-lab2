@@ -16,8 +16,8 @@ Date.prototype.addDays = function (days) { //Stackover flow
 var date = new Date();
 
 
-let computed_due_date_book= date.addDays(due_date_book);
-let computed_due_date_CD= date.addDays(due_date_cd);
+let computed_due_date_book = date.addDays(due_date_book);
+let computed_due_date_CD = date.addDays(due_date_cd);
 
 modal.style.display = "block";
 
@@ -79,9 +79,13 @@ document.getElementById("ip-user-birth-year").addEventListener("input", function
 });
 document.getElementById("btn-user-log-in").addEventListener("click", login);
 
-document.getElementById("btn-checkout").addEventListener("click", ()=>{
+document.getElementById("lang_en").addEventListener("click", ()=>{libObj.changeLang("en")});
+
+document.getElementById("lang_fr").addEventListener("click", ()=>{libObj.changeLang("fr")});
+
+document.getElementById("btn-checkout").addEventListener("click", () => {
   libObj.displayCheckout();
- 
+
 
 });
 
@@ -129,7 +133,7 @@ document.getElementById("btn-checkout-items-cancel").addEventListener("click", f
 
 document.getElementById("btn-checkout-items-ok").addEventListener("click", function () {
   libObj.checkout();
- 
+
 });
 
 
@@ -258,7 +262,7 @@ function validateAddItem() {
 function validateCopies(element) {
 
   if (validateNumber(element, errMsg.ip_edit_item_copies_invalid_char)) {
-    if (element.value < 1 || element.value > 10) {
+    if (element.value < 1 || element.value > 1) {
       return displayErrSpan(element, "block", errMsg.ip_edit_item_copies_invalid);
     } else {
       return displayErrSpan(element, "none", "");
@@ -448,6 +452,7 @@ function setParameters() {
 function logout() {
   admin = false;
   //window.location.reload();
+  libObj.changeLang("en");
   libObj.reset();
   modal.style.display = "block";
 }
@@ -463,7 +468,7 @@ const errMsg = {
   ip_user_birth_year_invalid_char: "Only digits allowed.",
   ip_user_birth_year_invalid: "Please enter a valid Year of Birth between 1900 and Current Year.",
   ip_edit_item_copies_invalid_char: "Only digits allowed.",
-  ip_edit_item_copies_invalid: "Please enter number of copies between 1 and 10 (both inclusive).",
+  ip_edit_item_copies_invalid: "Number of copies is restricted to 1 for Beta Version.",
   ip_alpha_num_invalid: "Should only contain alphabets and Numbers.",
   ip_due_date_invalid: "Please enter number of days between 1 and 99 (both inclusive)."
 };
@@ -478,7 +483,7 @@ const user_profile = {
 };
 
 class item {
-  constructor(id, type, name, publisher, author, edition, copies, image) {
+  constructor(id, type, name, publisher, author, edition, copies, image, nameObj) {
     this.id = Math.floor((Math.random() * 1000000) + 1);//id;
     this.type = type;
     this.name = name;
@@ -488,6 +493,8 @@ class item {
     this.copies = copies;
     this.image = image;
     this.active = true;
+    this.nameObj=nameObj;
+
   }
 
   updateCopies(copies) {
@@ -498,19 +505,20 @@ class item {
   }
 }
 
-let itemArray = new Array(new item("1", "Book", "Clean Code: A Handbook of Agile Software Craftsmanship", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean code.jpg"),
-  new item("2", "Book", "The Clean Coder: A Code of Conduct for Professional Programmers", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean coder.jpg"),
-  new item("3", "Book", "Clean Architecture: A Craftsman's Guide to Software Structure and Design", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean architecture.jpg"),
-  new item("4", "Book", "Becoming", "Publisher", "Michelle Obama", "1st Edition", 1, "resources/images/Becoming.jpg"),
-  new item("5", "Book", "Dreams from My Father: A Story of Race and Inheritance", "Publisher", "Barack Obama", "10th Edition", 1, "resources/images/Dreams Barack Obama.jpg"),
-  new item("6", "Book", "I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban", "Publisher", "Malala Yousafzai", "4th Edition", 1, "resources/images/malala.jpg"),
-  new item("7", "Book", "Long Walk to Freedom: The Autobiography of Nelson Mandela", "Publisher", "Nelson Mandela", "12th Edition", 1, "resources/images/Long Walk nelson.jpg"),
-  new item("8", "Book", "The Audacity of Hope: Thoughts on Reclaiming the American Dream", "Publisher", "Barack Obama", "7th Edition", 1, "resources/images/Audacity Barack Obama.jpg"),
-  new item("9", "Book", "An Autobiography: The Story of My Experiments with Truth", "Publisher", "Mahatma Gandhi", "9th Edition", 1, "resources/images/gandhi.jpg"),
-  new item("10", "CD", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg")
+
+let itemArray = new Array(new item("1", "Book", "Clean Code: A Handbook of Agile Software Craftsmanship", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean code.jpg",{name_en:"Clean Code: A Handbook of Agile Software Craftsmanship",name_fr:"Clean Code: Un manuel d'artisanat logiciel agile"}),
+  new item("2", "Book", "The Clean Coder: A Code of Conduct for Professional Programmers", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean coder.jpg",{name_en:"The Clean Coder: A Code of Conduct for Professional Programmers",name_fr:"The Clean Coder: Un code de conduite pour les programmeurs professionnels"}),
+  new item("3", "Book", "Clean Architecture: A Craftsman's Guide to Software Structure and Design", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean architecture.jpg",{name_en:"Clean Architecture: A Craftsman's Guide to Software Structure and Design",name_fr:"Clean Architecture: Guide de l'artisan sur la structure et la conception de logiciels"}),
+  new item("4", "Book", "Becoming", "Publisher", "Michelle Obama", "1st Edition", 1, "resources/images/Becoming.jpg",{name_en:"Becoming",name_fr:"Devenir"}),
+  new item("5", "Book", "Dreams from My Father: A Story of Race and Inheritance", "Publisher", "Barack Obama", "10th Edition", 1, "resources/images/Dreams Barack Obama.jpg",{name_en:"Dreams from My Father: A Story of Race and Inheritance",name_fr:"Les rêves de mon père: une histoire de race et d'héritage"}),
+  new item("6", "Book", "I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban", "Publisher", "Malala Yousafzai", "4th Edition", 1, "resources/images/malala.jpg",{name_en:"I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban",name_fr:"Je suis Malala: la fille qui a profité de l'éducation et qui a été abattue par les talibans"}),
+  new item("7", "Book", "Long Walk to Freedom: The Autobiography of Nelson Mandela", "Publisher", "Nelson Mandela", "12th Edition", 1, "resources/images/Long Walk nelson.jpg",{name_en:"Long Walk to Freedom: The Autobiography of Nelson Mandela",name_fr:"Longue marche vers la liberté: l'autobiographie de Nelson Mandela"}),
+  new item("8", "Book", "The Audacity of Hope: Thoughts on Reclaiming the American Dream", "Publisher", "Barack Obama", "7th Edition", 1, "resources/images/Audacity Barack Obama.jpg",{name_en:"The Audacity of Hope: Thoughts on Reclaiming the American Dream",name_fr:"L'audace de l'espoir: Réflexions sur la reconquête du rêve américain"}),
+  new item("9", "Book", "An Autobiography: The Story of My Experiments with Truth", "Publisher", "Mahatma Gandhi", "9th Edition", 1, "resources/images/gandhi.jpg",{name_en:"An Autobiography: The Story of My Experiments with Truth",name_fr:"Une autobiographie: l'histoire de mes expériences avec la vérité"}),
+  new item("10", "CD", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg",{name_en:"Common Ground",name_fr:"Terrain d'entente"})
 );
 
-let cart=new Array();
+let cart = new Array();
 
 
 
@@ -530,36 +538,34 @@ class library {
 
     rootNode = document.getElementById("basket");
     childNode = rootNode.firstElementChild;
-  
-     while (childNode && childNode.id!="div-checkout-btn") {     
+
+    while (childNode && childNode.id != "div-checkout-btn") {
       rootNode.removeChild(childNode);
       childNode = rootNode.firstElementChild;
     }
     let count = 0;
-    if(cart.length>0)
-    {
-      cart.forEach((item)=>{
+    if (cart.length > 0) {
+      cart.forEach((item) => {
         for (count = 0; count < itemArray.length; count++) {
-          if(item.id==itemArray[count].id)
-          {
+          if (item.id == itemArray[count].id) {
             itemArray[count].copies++;
-            itemArray[count].active=true;
+            itemArray[count].active = true;
             break;
           }
         }
 
 
-      }      
+      }
       )
-    cart=new Array();
+      cart = new Array();
     }
 
-   
+
     for (count = 0; count < itemArray.length; count++) {
       if (this.itemArray[count].active) {
         let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
         htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
-        htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
+        htmlText = htmlText.concat("<h4 class=\"item_name\">" + itemArray[count].name + "</h4> by ");
         htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
         htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
         htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
@@ -575,9 +581,8 @@ class library {
       }
     }
 
-    if(cart.length<=0)
-    {
-      document.getElementById("btn-checkout").style.display="none";
+    if (cart.length <= 0) {
+      document.getElementById("btn-checkout").style.display = "none";
     }
 
     setParameters();
@@ -609,7 +614,7 @@ class library {
 
         let htmlText = "<div id=\"divIdBasket" + this.itemArray[count].id + "\" class=\"items\"\>";
         htmlText = htmlText.concat("<img alt=\"" + this.itemArray[count].name + "\" class=\"item_img\" src=\"" + this.itemArray[count].image + "\" />");
-        htmlText = htmlText.concat("<h4>" + this.itemArray[count].name + "</h4> by ");
+        htmlText = htmlText.concat("<h4 class=\"item_name\">" + this.itemArray[count].name + "</h4> by ");
         htmlText = htmlText.concat("<h5>" + this.itemArray[count].author + "</h5>");
         htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
         htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
@@ -633,12 +638,11 @@ class library {
     for (count = 0; count < cart.length; count++) {
       if (cart[count].id == itemId) {
         cart.splice(count, 1);
+      }
     }
-  }
-  if(cart.length<=0)
-  {
-    document.getElementById("btn-checkout").style.display="none";
-  }
+    if (cart.length <= 0) {
+      document.getElementById("btn-checkout").style.display = "none";
+    }
 
     for (count = 0; count < this.itemArray.length; count++) {
       if (this.itemArray[count].id == itemId) {
@@ -646,7 +650,7 @@ class library {
         if (this.itemArray[count].copies == 1) {
           let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
           htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
-          htmlText = htmlText.concat("<h4>" + itemArray[count].name + "</h4> by ");
+          htmlText = htmlText.concat("<h4 class=\"item_name\">" + itemArray[count].name + "</h4> by ");
           htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
           htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
           htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
@@ -666,7 +670,7 @@ class library {
         removeObj.remove();
         break;
       }
-     
+
     }
   }
   editItem(itemId) {
@@ -710,7 +714,7 @@ class library {
       document.getElementById("ip-add-item-copies").value,
       document.getElementById("add-item-img").src);
 
-     
+
     this.itemArray.push(itemObj);
     libObj.reset();
     var all = document.getElementsByClassName('validate-add');
@@ -724,7 +728,7 @@ class library {
   }
   updateDueDate() {
     date = new Date();
-   due_date_book =  Number(document.getElementById("ip-due-date-book").value);
+    due_date_book = Number(document.getElementById("ip-due-date-book").value);
     computed_due_date_book = date.addDays(due_date_book);
     due_date_cd = Number(document.getElementById("ip-due-date-cd").value);
     computed_due_date_CD = date.addDays(due_date_cd);
@@ -733,29 +737,28 @@ class library {
 
   }
 
-displayCheckout()
-{
-  let count = 0;
-  let due_date;
+  displayCheckout() {
+    let count = 0;
+    let due_date;
 
-  let rootNode = document.getElementById("checkout-items");
-  let childNode = rootNode.firstElementChild;
+    let rootNode = document.getElementById("checkout-items");
+    let childNode = rootNode.firstElementChild;
 
-   while (childNode && childNode.id!="div-checkout-items-btn") {     
-    rootNode.removeChild(childNode);
-    childNode = rootNode.firstElementChild;
-  }
-
-
-  for (count = 0; count < cart.length; count++) {
-
-
-    
-    if (cart[count].type == "Book") {
-      due_date = computed_due_date_book;
-    } else {
-      due_date = computed_due_date_CD;
+    while (childNode && childNode.id != "div-checkout-items-btn") {
+      rootNode.removeChild(childNode);
+      childNode = rootNode.firstElementChild;
     }
+
+
+    for (count = 0; count < cart.length; count++) {
+
+
+
+      if (cart[count].type == "Book") {
+        due_date = computed_due_date_book;
+      } else {
+        due_date = computed_due_date_CD;
+      }
       let htmlText = "<div id=\"divIdCheckout" + cart[count].id + "\" class=\"items\"\>";
       htmlText = htmlText.concat("<h4>" + cart[count].name + "</h4> by ");
       htmlText = htmlText.concat("<h5>" + cart[count].author + "</h5><br/>");
@@ -765,54 +768,77 @@ displayCheckout()
 
       let checkout_items = document.getElementById("checkout-items");
       checkout_items.insertAdjacentHTML("afterbegin", htmlText);
-  }
-
-  document.getElementById("checkout-total-items").innerHTML=count;
-  
-  checkout_modal.style.display="block";
-}
-
-checkout(){
-
-  checkout_modal.style.display = "none";
-  let rootNode = document.getElementById("checkout-items");
-  let childNode = rootNode.firstElementChild;
-
-   while (childNode && childNode.id!="div-checkout-items-btn") {     
-    rootNode.removeChild(childNode);
-    childNode = rootNode.firstElementChild;
-  }
-  document.getElementById("checkout-total-items").innerHTML=0;
-  
-  rootNode = document.getElementById("basket");
-  childNode = rootNode.firstElementChild;
-
-   while (childNode && childNode.id!="div-checkout-btn") {     
-    rootNode.removeChild(childNode);
-    childNode = rootNode.firstElementChild;
-  }
-
-let count=0;
-  cart.forEach((item)=>{
-    for (count = 0; count < itemArray.length; count++) {
-
-      if(item.id==itemArray[count].id)
-      {
-        itemArray.splice(count, 1);
-        break;
-      }
     }
 
+    document.getElementById("checkout-total-items").innerHTML = count;
 
-  }); 
-  
-  cart= new Array();
-  document.getElementById("btn-items-available").click();
-
+    checkout_modal.style.display = "block";
+  }
 
 
-}
+  checkout() {
 
+    checkout_modal.style.display = "none";
+    let rootNode = document.getElementById("checkout-items");
+    let childNode = rootNode.firstElementChild;
+
+    while (childNode && childNode.id != "div-checkout-items-btn") {
+      rootNode.removeChild(childNode);
+      childNode = rootNode.firstElementChild;
+    }
+    document.getElementById("checkout-total-items").innerHTML = 0;
+
+    rootNode = document.getElementById("basket");
+    childNode = rootNode.firstElementChild;
+
+    while (childNode && childNode.id != "div-checkout-btn") {
+      rootNode.removeChild(childNode);
+      childNode = rootNode.firstElementChild;
+    }
+
+    let count = 0;
+    cart.forEach((item) => {
+      for (count = 0; count < itemArray.length; count++) {
+
+        if (item.id == itemArray[count].id) {
+          itemArray.splice(count, 1);
+          break;
+        }
+      }
+
+
+    });
+
+    cart = new Array();
+    document.getElementById("btn-items-available").click();
+
+
+
+  }
+
+  changeLang(lang) {
+    let count = 0;
+   
+   var all = Array.from(document.getElementsByClassName('item_name'));
+    all.forEach((item) => {
+      for (count = 0; count < itemArray.length; count++) {
+        if (itemArray[count].name == item.innerHTML) {
+          if (lang == "en") {
+            item.innerHTML = itemArray[count].nameObj.name_en;
+            itemArray[count].name = itemArray[count].nameObj.name_en;
+
+          }
+          else if (lang == "fr") {
+            item.innerHTML = itemArray[count].nameObj.name_fr;
+            itemArray[count].name = itemArray[count].nameObj.name_fr;
+
+          }
+          break;
+        }
+      }
+    })
+
+  }
 }
 
 let libObj = new library(itemArray);
