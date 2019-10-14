@@ -21,13 +21,13 @@ let computed_due_date_CD = date.addDays(due_date_cd);
 
 modal.style.display = "block";
 
-
+/*
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
-}
+}*/
 
 function displayErrSpan(element, block_none, errMsg) {
   document.getElementById("err-" + element.id).style.display = block_none;
@@ -79,9 +79,9 @@ document.getElementById("ip-user-birth-year").addEventListener("input", function
 });
 document.getElementById("btn-user-log-in").addEventListener("click", login);
 
-document.getElementById("lang_en").addEventListener("click", ()=>{libObj.changeLang("en")});
+document.getElementById("lang_en").addEventListener("click", () => { libObj.changeLang("en") });
 
-document.getElementById("lang_fr").addEventListener("click", ()=>{libObj.changeLang("fr")});
+document.getElementById("lang_fr").addEventListener("click", () => { libObj.changeLang("fr") });
 
 document.getElementById("btn-checkout").addEventListener("click", () => {
   libObj.displayCheckout();
@@ -121,6 +121,15 @@ function validateDueDateBtn() {
 
 document.getElementById("edit-modal-close").addEventListener("click", function () {
   edit_modal.style.display = "none";
+  var all = document.getElementsByClassName('validate-due-date');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+  all = document.getElementsByClassName('form-error-msg');
+  for (var i = 0; i < all.length; i++) {
+    all[i].innerHTML = "";
+  }
+
 });
 
 document.getElementById("checkout-close").addEventListener("click", function () {
@@ -146,6 +155,14 @@ document.getElementById("btn-due-date").addEventListener("click", function () {
 
 document.getElementById("due-date-modal-close").addEventListener("click", function () {
   due_date_modal.style.display = "none";
+  var all = document.getElementsByClassName('validate-due-date');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+  all = document.getElementsByClassName('form-error-msg');
+  for (var i = 0; i < all.length; i++) {
+    all[i].innerHTML = "";
+  }
 });
 
 document.getElementById("btn-edit-update").addEventListener("click", () => {
@@ -157,6 +174,10 @@ document.getElementById("btn-edit-update").addEventListener("click", () => {
         edit_modal.style.display = "none";
       }
     });
+    var all = document.getElementsByClassName('validate-edit');
+    for (var i = 0; i < all.length; i++) {
+      all[i].value = "";
+    }
     libObj.reset();
   }
 });
@@ -415,7 +436,13 @@ function login() {
   if (success) {
     setParameters();
     modal.style.display = "none";
+    var all = document.getElementsByClassName('validate-login');
+    for (var i = 0; i < all.length; i++) {
+      all[i].value = "";
+    }
   }
+
+
 }
 function setParameters() {
   if (admin) {
@@ -453,6 +480,26 @@ function logout() {
   admin = false;
   //window.location.reload();
   libObj.changeLang("en");
+  var all = document.getElementsByClassName('form-error-msg');
+  for (var i = 0; i < all.length; i++) {
+    all[i].innerHTML = "";
+  }
+
+  all = document.getElementsByClassName('validate-add');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+
+  all = document.getElementsByClassName('validate-edit');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+
+  all = document.getElementsByClassName('validate-due-date');
+  for (var i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+
   libObj.reset();
   modal.style.display = "block";
 }
@@ -493,7 +540,7 @@ class item {
     this.copies = copies;
     this.image = image;
     this.active = true;
-    this.nameObj=nameObj;
+    this.nameObj = nameObj;
 
   }
 
@@ -506,16 +553,16 @@ class item {
 }
 
 
-let itemArray = new Array(new item("1", "Book", "Clean Code: A Handbook of Agile Software Craftsmanship", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean code.jpg",{name_en:"Clean Code: A Handbook of Agile Software Craftsmanship",name_fr:"Clean Code: Un manuel d'artisanat logiciel agile"}),
-  new item("2", "Book", "The Clean Coder: A Code of Conduct for Professional Programmers", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean coder.jpg",{name_en:"The Clean Coder: A Code of Conduct for Professional Programmers",name_fr:"The Clean Coder: Un code de conduite pour les programmeurs professionnels"}),
-  new item("3", "Book", "Clean Architecture: A Craftsman's Guide to Software Structure and Design", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean architecture.jpg",{name_en:"Clean Architecture: A Craftsman's Guide to Software Structure and Design",name_fr:"Clean Architecture: Guide de l'artisan sur la structure et la conception de logiciels"}),
-  new item("4", "Book", "Becoming", "Publisher", "Michelle Obama", "1st Edition", 1, "resources/images/Becoming.jpg",{name_en:"Becoming",name_fr:"Devenir"}),
-  new item("5", "Book", "Dreams from My Father: A Story of Race and Inheritance", "Publisher", "Barack Obama", "10th Edition", 1, "resources/images/Dreams Barack Obama.jpg",{name_en:"Dreams from My Father: A Story of Race and Inheritance",name_fr:"Les rêves de mon père: une histoire de race et d'héritage"}),
-  new item("6", "Book", "I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban", "Publisher", "Malala Yousafzai", "4th Edition", 1, "resources/images/malala.jpg",{name_en:"I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban",name_fr:"Je suis Malala: la fille qui a profité de l'éducation et qui a été abattue par les talibans"}),
-  new item("7", "Book", "Long Walk to Freedom: The Autobiography of Nelson Mandela", "Publisher", "Nelson Mandela", "12th Edition", 1, "resources/images/Long Walk nelson.jpg",{name_en:"Long Walk to Freedom: The Autobiography of Nelson Mandela",name_fr:"Longue marche vers la liberté: l'autobiographie de Nelson Mandela"}),
-  new item("8", "Book", "The Audacity of Hope: Thoughts on Reclaiming the American Dream", "Publisher", "Barack Obama", "7th Edition", 1, "resources/images/Audacity Barack Obama.jpg",{name_en:"The Audacity of Hope: Thoughts on Reclaiming the American Dream",name_fr:"L'audace de l'espoir: Réflexions sur la reconquête du rêve américain"}),
-  new item("9", "Book", "An Autobiography: The Story of My Experiments with Truth", "Publisher", "Mahatma Gandhi", "9th Edition", 1, "resources/images/gandhi.jpg",{name_en:"An Autobiography: The Story of My Experiments with Truth",name_fr:"Une autobiographie: l'histoire de mes expériences avec la vérité"}),
-  new item("10", "CD", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg",{name_en:"Common Ground",name_fr:"Terrain d'entente"})
+let itemArray = new Array(new item("1", "Book", "Clean Code: A Handbook of Agile Software Craftsmanship", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean code.jpg", { name_en: "Clean Code: A Handbook of Agile Software Craftsmanship", name_fr: "Clean Code: Un manuel d'artisanat logiciel agile" }),
+  new item("2", "Book", "The Clean Coder: A Code of Conduct for Professional Programmers", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean coder.jpg", { name_en: "The Clean Coder: A Code of Conduct for Professional Programmers", name_fr: "The Clean Coder: Un code de conduite pour les programmeurs professionnels" }),
+  new item("3", "Book", "Clean Architecture: A Craftsman's Guide to Software Structure and Design", "Publisher", "Robert C. Martin ", "12th Edition", 1, "resources/images/clean architecture.jpg", { name_en: "Clean Architecture: A Craftsman's Guide to Software Structure and Design", name_fr: "Clean Architecture: Guide de l'artisan sur la structure et la conception de logiciels" }),
+  new item("4", "Book", "Becoming", "Publisher", "Michelle Obama", "1st Edition", 1, "resources/images/Becoming.jpg", { name_en: "Becoming", name_fr: "Devenir" }),
+  new item("5", "Book", "Dreams from My Father: A Story of Race and Inheritance", "Publisher", "Barack Obama", "10th Edition", 1, "resources/images/Dreams Barack Obama.jpg", { name_en: "Dreams from My Father: A Story of Race and Inheritance", name_fr: "Les rêves de mon père: une histoire de race et d'héritage" }),
+  new item("6", "Book", "I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban", "Publisher", "Malala Yousafzai", "4th Edition", 1, "resources/images/malala.jpg", { name_en: "I Am Malala: The Girl Who Stood Up for Education and Was Shot by the Taliban", name_fr: "Je suis Malala: la fille qui a profité de l'éducation et qui a été abattue par les talibans" }),
+  new item("7", "Book", "Long Walk to Freedom: The Autobiography of Nelson Mandela", "Publisher", "Nelson Mandela", "12th Edition", 1, "resources/images/Long Walk nelson.jpg", { name_en: "Long Walk to Freedom: The Autobiography of Nelson Mandela", name_fr: "Longue marche vers la liberté: l'autobiographie de Nelson Mandela" }),
+  new item("8", "Book", "The Audacity of Hope: Thoughts on Reclaiming the American Dream", "Publisher", "Barack Obama", "7th Edition", 1, "resources/images/Audacity Barack Obama.jpg", { name_en: "The Audacity of Hope: Thoughts on Reclaiming the American Dream", name_fr: "L'audace de l'espoir: Réflexions sur la reconquête du rêve américain" }),
+  new item("9", "Book", "An Autobiography: The Story of My Experiments with Truth", "Publisher", "Mahatma Gandhi", "9th Edition", 1, "resources/images/gandhi.jpg", { name_en: "An Autobiography: The Story of My Experiments with Truth", name_fr: "Une autobiographie: l'histoire de mes expériences avec la vérité" }),
+  new item("10", "CD", "Common Ground", "Publisher", "Justin Trudeau", "9th Edition", 1, "resources/images/Common Ground Trudeau.jpg", { name_en: "Common Ground", name_fr: "Terrain d'entente" })
 );
 
 let cart = new Array();
@@ -733,6 +780,11 @@ class library {
     due_date_cd = Number(document.getElementById("ip-due-date-cd").value);
     computed_due_date_CD = date.addDays(due_date_cd);
     due_date_modal.style.display = "none";
+    var all = document.getElementsByClassName('validate-due-date');
+    for (var i = 0; i < all.length; i++) {
+      all[i].value = "";
+    }
+
     //this.reset();
 
   }
@@ -818,8 +870,8 @@ class library {
 
   changeLang(lang) {
     let count = 0;
-   
-   var all = Array.from(document.getElementsByClassName('item_name'));
+
+    var all = Array.from(document.getElementsByClassName('item_name'));
     all.forEach((item) => {
       for (count = 0; count < itemArray.length; count++) {
         if (itemArray[count].name == item.innerHTML) {

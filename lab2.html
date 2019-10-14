@@ -86,7 +86,7 @@
                   id="edit-item-type"></span></label><br />
               <div class="form-group">
                 <label for="lbl_edit-item-copies">Available Copies:<span class="form-mandatory-input">*</span></label>
-                <input type="text" maxlength="2" class="form-control" id="ip-edit-item-copies"
+                <input type="text" maxlength="2" class="form-control validate-edit" id="ip-edit-item-copies"
                   placeholder="Number of copies" readonly="true">
                 <span id="err-ip-edit-item-copies" class="form-error-msg"></span>
               </div>
@@ -275,6 +275,27 @@
     </div>
     <script>
       function openTab(evt, tabName) {
+
+
+        var all = document.getElementsByClassName('form-error-msg');
+        for (var i = 0; i < all.length; i++) {
+          all[i].innerHTML = "";
+        }
+
+        all = document.getElementsByClassName('validate-add');
+        for (var i = 0; i < all.length; i++) {
+          all[i].classList.remove("invalid");
+        }
+
+        all = document.getElementsByClassName('validate-edit');
+        for (var i = 0; i < all.length; i++) {
+          all[i].classList.remove("invalid");
+        }
+
+        all = document.getElementsByClassName('validate-due-date');
+        for (var i = 0; i < all.length; i++) {
+          all[i].classList.remove("invalid");
+        }
 
         if (tabName == "main-basket") {
           if (cart.length > 0) {
