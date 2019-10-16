@@ -214,6 +214,10 @@ document.getElementById("ip-add-item-name").addEventListener("input", function (
   validateAlphaNumInput(this, errMsg.ip_alpha_num_invalid);
 });
 
+document.getElementById("ip-add-item-name-fr").addEventListener("input", function () {
+  validateAlphaNumInput(this, errMsg.ip_alpha_num_invalid);
+});
+
 document.getElementById("ip-add-item-author").addEventListener("input", function () {
   validateCharInput(this, errMsg.ip_char_invalid);
 });
@@ -256,6 +260,9 @@ function validateAddItem() {
        success = false; }
     }*/
     else if (element[i].id === "ip-add-item-name") {
+      if (!validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
+    }
+    else if (element[i].id === "ip-add-item-name-fr") {
       if (!validateAlphaNumInput(element[i], errMsg.ip_alpha_num_invalid)) { success = false; }
     }
     else if (element[i].id === "ip-add-item-author") {
@@ -759,7 +766,8 @@ class library {
       document.getElementById("ip-add-item-author").value,
       document.getElementById("ip-add-item-edition").value,
       document.getElementById("ip-add-item-copies").value,
-      document.getElementById("add-item-img").src);
+      document.getElementById("add-item-img").src,
+      { name_en: document.getElementById("ip-add-item-name").value, name_fr: document.getElementById("ip-add-item-name-fr").value });
 
 
     this.itemArray.push(itemObj);

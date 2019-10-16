@@ -211,14 +211,21 @@
                 </td>
                 <td>
                   <div class="form-group">
+                    <label for="add-item-name-fr">Nom:<span class="form-mandatory-input">*</span></label>
+                    <input type="text" maxlength="100" class="form-control validate-add" id="ip-add-item-name-fr"
+                      style="text-Transform:capitalize" placeholder="Book/CD Name in French">
+                    <span id="err-ip-add-item-name-fr" class="form-error-msg"></span>
+                  </div>
+                </td>
+                </tr><tr>
+                <td>
+                  <div class="form-group">
                     <label for="add-item-author">Author:<span class="form-mandatory-input">*</span></label>
                     <input type="text" maxlength="100" class="form-control validate-add" id="ip-add-item-author"
                       style="text-Transform:capitalize" placeholder="Name of the Author">
                     <span id="err-ip-add-item-author" class="form-error-msg"></span>
                   </div>
                 </td>
-              </tr>
-              <tr>
                 <td>
                   <div class="form-group">
                     <label for="add-item-type">Type:<span class="form-mandatory-input">*</span></label>
@@ -229,6 +236,7 @@
                     <span id="err-ip-add-item-type" class="form-error-msg"></span>
                   </div>
                 </td>
+              </tr><tr>
                 <td>
                   <div class="form-group">
                     <label for="add-item-publisher">Publisher:<span class="form-mandatory-input">*</span></label>
@@ -237,8 +245,6 @@
                     <span id="err-ip-add-item-publisher" class="form-error-msg"></span>
                   </div>
                 </td>
-              </tr>
-              <tr>
                 <td>
                   <div class="form-group">
                     <label for="add-item-edition">Edition:<span class="form-mandatory-input">*</span></label>
@@ -247,6 +253,7 @@
                     <span id="err-ip-add-item-edition" class="form-error-msg"></span>
                   </div>
                 </td>
+              </tr><tr>
                 <td>
                   <div class="form-group">
                     <label for="add-item-copies">Copies:<span class="form-mandatory-input">*</span></label>
@@ -255,17 +262,17 @@
                     <span id="err-ip-add-item-copies" class="form-error-msg"></span>
                   </div>
                 </td>
-              </tr>
-              <tr>
                 <td>
                   <div class="form-group">
                     <label for="lbl-add-item-image-btn">Icon: <input type='file' id="btn-add-item-image" /></label>
                     <span id="err-btn-add-item-image" class="form-error-msg"></span>
                   </div>
                 </td>
-                <td>
+              </tr><tr>
+                <td colspan="2">
                   <button type="button" class="btn-add-item" id="btn-add-item">Add</button>
                 </td>
+               </tr>
               </tr>
             </table>
 
