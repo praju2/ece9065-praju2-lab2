@@ -6,7 +6,7 @@ let modal = document.getElementById("login-modal");
 let edit_modal = document.getElementById("edit-modal");
 let checkout_modal = document.getElementById("checkout-modal");
 let due_date_modal = document.getElementById("due-date-modal");
-let selected_lang="en";
+let selected_lang = "en";
 
 Date.prototype.addDays = function (days) { //Stackover flow
   let date = new Date(this.valueOf());
@@ -664,7 +664,8 @@ class library {
       if (this.itemArray[count].active) {
         let htmlText = "<div id=\"item" + itemArray[count].id + "\" class=\"items\"\>";
         htmlText = htmlText.concat("<img alt=\"" + itemArray[count].name + "\" class=\"item_img\" src=\"" + itemArray[count].image + "\" />");
-        htmlText = htmlText.concat("<h4 class=\"item_name\">" + itemArray[count].name + "</h4> by ");
+        // htmlText = htmlText.concat("<h4 class=\"item_name\">" + itemArray[count].name + "</h4> by ");
+        htmlText = htmlText.concat("<h4 class=\"item_name\" id=\"item_name" + itemArray[count].id + "\"></h4> by ");
         htmlText = htmlText.concat("<h5>" + itemArray[count].author + "</h5>");
         htmlText = htmlText.concat("<p><b>Publisher:</b> " + itemArray[count].publisher + "   ");
         htmlText = htmlText.concat("<b>Edition:</b> " + itemArray[count].edition + "    ");
@@ -677,6 +678,11 @@ class library {
 
         let available_items = document.getElementById("available-items");
         available_items.insertAdjacentHTML("beforeend", htmlText);
+        document.getElementById("item_name" + itemArray[count].id).appendChild(document.createTextNode(itemArray[count].name));
+        /*createTextNode was used only to showcase the usage, but for the scenarios described in assignment 2, insertAdjacentHTML is best suited for following reasons
+        1) insertAdjacentHTML is faster than createElement while compromising on flexiblity. As the div layout remains the same for every item, such level of flexiblity is not required and page can be loaded much faster and interactive.
+        2) The inputs are pre sanitized. Therefore, creteTextNode is redundant as the user will not be able to inject any malicious code. 
+      */
       }
     }
 
@@ -806,7 +812,7 @@ class library {
   addItem() {
     let itemObj = new item("99",
       document.getElementById("ip-add-item-type").value,
-      selected_lang=="en"?document.getElementById("ip-add-item-name").value:document.getElementById("ip-add-item-name-fr").value,
+      selected_lang == "en" ? document.getElementById("ip-add-item-name").value : document.getElementById("ip-add-item-name-fr").value,
       document.getElementById("ip-add-item-publisher").value,
       document.getElementById("ip-add-item-author").value,
       document.getElementById("ip-add-item-edition").value,
@@ -923,7 +929,7 @@ class library {
 
   changeLang(lang) {
     let count = 0;
-    selected_lang=lang;
+    selected_lang = lang;
     let all = Array.from(document.getElementsByClassName('item_name'));
     all.forEach((item) => {
       for (count = 0; count < itemArray.length; count++) {
