@@ -217,7 +217,8 @@
                     <span id="err-ip-add-item-name-fr" class="form-error-msg"></span>
                   </div>
                 </td>
-                </tr><tr>
+              </tr>
+              <tr>
                 <td>
                   <div class="form-group">
                     <label for="add-item-author">Author:<span class="form-mandatory-input">*</span></label>
@@ -236,7 +237,8 @@
                     <span id="err-ip-add-item-type" class="form-error-msg"></span>
                   </div>
                 </td>
-              </tr><tr>
+              </tr>
+              <tr>
                 <td>
                   <div class="form-group">
                     <label for="add-item-publisher">Publisher:<span class="form-mandatory-input">*</span></label>
@@ -253,7 +255,8 @@
                     <span id="err-ip-add-item-edition" class="form-error-msg"></span>
                   </div>
                 </td>
-              </tr><tr>
+              </tr>
+              <tr>
                 <td>
                   <div class="form-group">
                     <label for="add-item-copies">Copies:<span class="form-mandatory-input">*</span></label>
@@ -268,11 +271,12 @@
                     <span id="err-btn-add-item-image" class="form-error-msg"></span>
                   </div>
                 </td>
-              </tr><tr>
+              </tr>
+              <tr>
                 <td colspan="2">
                   <button type="button" class="btn-add-item" id="btn-add-item">Add</button>
                 </td>
-               </tr>
+              </tr>
               </tr>
             </table>
 
@@ -280,54 +284,6 @@
         </div>
       </div>
     </div>
-    <script>
-      function openTab(evt, tabName) {
-
-
-        var all = document.getElementsByClassName('form-error-msg');
-        for (var i = 0; i < all.length; i++) {
-          all[i].innerHTML = "";
-        }
-
-        all = document.getElementsByClassName('validate-add');
-        for (var i = 0; i < all.length; i++) {
-          all[i].classList.remove("invalid");
-        }
-
-        all = document.getElementsByClassName('validate-edit');
-        for (var i = 0; i < all.length; i++) {
-          all[i].classList.remove("invalid");
-        }
-
-        all = document.getElementsByClassName('validate-due-date');
-        for (var i = 0; i < all.length; i++) {
-          all[i].classList.remove("invalid");
-        }
-
-        if (tabName == "main-basket") {
-          if (cart.length > 0) {
-            document.getElementById("btn-checkout").style.display = "block";
-
-          } else {
-            document.getElementById("btn-checkout").style.display = "none";
-          }
-        }
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-      }
-
-      //document.getElementById("btn-items-available").click();
-
-    </script>
     <script type='text/javascript' src='script.js'></script>
   </div>
 </body>

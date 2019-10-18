@@ -1,19 +1,20 @@
-var currentYear = new Date().getFullYear();
+let currentYear = new Date().getFullYear();
 let admin = false;
 let due_date_book = 30;
 let due_date_cd = 10;
-var modal = document.getElementById("login-modal");
+let modal = document.getElementById("login-modal");
 let edit_modal = document.getElementById("edit-modal");
 let checkout_modal = document.getElementById("checkout-modal");
 let due_date_modal = document.getElementById("due-date-modal");
+let selected_lang="en";
 
 Date.prototype.addDays = function (days) { //Stackover flow
-  var date = new Date(this.valueOf());
+  let date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
 }
 
-var date = new Date();
+let date = new Date();
 
 
 let computed_due_date_book = date.addDays(due_date_book);
@@ -28,6 +29,50 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 }*/
+
+function openTab(evt, tabName) {
+
+
+  let all = document.getElementsByClassName('form-error-msg');
+  for (let i = 0; i < all.length; i++) {
+    all[i].innerHTML = "";
+  }
+
+  all = document.getElementsByClassName('validate-add');
+  for (let i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+
+  all = document.getElementsByClassName('validate-edit');
+  for (let i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+
+  all = document.getElementsByClassName('validate-due-date');
+  for (let i = 0; i < all.length; i++) {
+    all[i].classList.remove("invalid");
+  }
+
+  if (tabName == "main-basket") {
+    if (cart.length > 0) {
+      document.getElementById("btn-checkout").style.display = "block";
+
+    } else {
+      document.getElementById("btn-checkout").style.display = "none";
+    }
+  }
+  let i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
 
 function displayErrSpan(element, block_none, errMsg) {
   document.getElementById("err-" + element.id).style.display = block_none;
@@ -94,9 +139,9 @@ document.getElementById("btn-due-date-update").addEventListener("click", validat
 
 function validateDueDateBtn() {
 
-  var element = document.getElementsByClassName("validate-due-date");
-  var i;
-  var success = true;
+  let element = document.getElementsByClassName("validate-due-date");
+  let i;
+  let success = true;
   for (i = 0; i < element.length; i++) {
 
     if (element[i].value == '') {
@@ -121,12 +166,12 @@ function validateDueDateBtn() {
 
 document.getElementById("edit-modal-close").addEventListener("click", function () {
   edit_modal.style.display = "none";
-  var all = document.getElementsByClassName('validate-due-date');
-  for (var i = 0; i < all.length; i++) {
+  let all = document.getElementsByClassName('validate-due-date');
+  for (let i = 0; i < all.length; i++) {
     all[i].classList.remove("invalid");
   }
   all = document.getElementsByClassName('form-error-msg');
-  for (var i = 0; i < all.length; i++) {
+  for (let i = 0; i < all.length; i++) {
     all[i].innerHTML = "";
   }
 
@@ -155,12 +200,12 @@ document.getElementById("btn-due-date").addEventListener("click", function () {
 
 document.getElementById("due-date-modal-close").addEventListener("click", function () {
   due_date_modal.style.display = "none";
-  var all = document.getElementsByClassName('validate-due-date');
-  for (var i = 0; i < all.length; i++) {
+  let all = document.getElementsByClassName('validate-due-date');
+  for (let i = 0; i < all.length; i++) {
     all[i].classList.remove("invalid");
   }
   all = document.getElementsByClassName('form-error-msg');
-  for (var i = 0; i < all.length; i++) {
+  for (let i = 0; i < all.length; i++) {
     all[i].innerHTML = "";
   }
 });
@@ -174,8 +219,8 @@ document.getElementById("btn-edit-update").addEventListener("click", () => {
         edit_modal.style.display = "none";
       }
     });
-    var all = document.getElementsByClassName('validate-edit');
-    for (var i = 0; i < all.length; i++) {
+    let all = document.getElementsByClassName('validate-edit');
+    for (let i = 0; i < all.length; i++) {
       all[i].value = "";
     }
     libObj.reset();
@@ -241,9 +286,9 @@ document.getElementById("btn-add-item").addEventListener("click", function () {
 
 function validateAddItem() {
 
-  var element = document.getElementsByClassName("validate-add");
-  var i;
-  var success = true;
+  let element = document.getElementsByClassName("validate-add");
+  let i;
+  let success = true;
   for (i = 0; i < element.length; i++) {
 
     if (element[i].value == '') {
@@ -330,7 +375,7 @@ function validateAdminUser(element) {
 }
 
 function validateCharInput(element, errMsg) {
-  var letters = /^[ a-z]*$/i;
+  let letters = /^[ a-z]*$/i;
   //this.value=this.value.trim();
   if (!element.value.match(letters)) {
     return displayErrSpan(element, "block", errMsg);
@@ -344,7 +389,7 @@ function validateCharInput(element, errMsg) {
 }
 
 function validateAlphaNumInput(element, errMsg) {
-  var letters = /^[ a-zA-Z0-9]*$/i;
+  let letters = /^[ a-zA-Z0-9]*$/i;
   //this.value=this.value.trim();
   if (!element.value.match(letters)) {
     return displayErrSpan(element, "block", errMsg);
@@ -359,7 +404,7 @@ function validateAlphaNumInput(element, errMsg) {
 
 function validateEmail(element, errMsg) {
   element.value = element.value.trim();
-  var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //Pattern extracted from https://www.w3resource.com/javascript/form/email-validation.php
+  let mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //Pattern extracted from https://www.w3resource.com/javascript/form/email-validation.php
   if (element.value != '' && !element.value.match(mailFormat)) {
     return displayErrSpan(element, "block", errMsg);
 
@@ -373,7 +418,7 @@ function validateEmail(element, errMsg) {
 
 function validateNumber(element, errMsg) {
   element.value = element.value.trim();
-  var numberFormat = /^[0-9]*$/i;
+  let numberFormat = /^[0-9]*$/i;
   if (!element.value.match(numberFormat)) {
     return displayErrSpan(element, "block", errMsg);
 
@@ -403,9 +448,9 @@ function validateYear(element, errMsg) {
 }
 
 function login() {
-  var element = document.getElementsByClassName("validate-login");
-  var i;
-  var success = true;
+  let element = document.getElementsByClassName("validate-login");
+  let i;
+  let success = true;
   for (i = 0; i < element.length; i++) {
 
     if (element[i].value == '') {
@@ -428,7 +473,7 @@ function login() {
 
       if (!validateBirthYear(element[i])) { success = false; }
       else {
-        var age = currentYear - Number(element[i].value);
+        let age = currentYear - Number(element[i].value);
         if (age >= 18) {
           document.getElementById("disp-" + element[i].id).innerHTML = "Adult";
         } else {
@@ -443,8 +488,8 @@ function login() {
   if (success) {
     setParameters();
     modal.style.display = "none";
-    var all = document.getElementsByClassName('validate-login');
-    for (var i = 0; i < all.length; i++) {
+    let all = document.getElementsByClassName('validate-login');
+    for (let i = 0; i < all.length; i++) {
       all[i].value = "";
     }
   }
@@ -455,12 +500,12 @@ function setParameters() {
   if (admin) {
     document.getElementById("disp-ip-user-name").innerHTML = user_profile.user1.user_disp_name;
     document.getElementById("disp-ip-user-birth-year").innerHTML = "Admin";
-    var all = document.getElementsByClassName('admin');
-    for (var i = 0; i < all.length; i++) {
+    let all = document.getElementsByClassName('admin');
+    for (let i = 0; i < all.length; i++) {
       all[i].style.display = "block";
     }
     all = document.getElementsByClassName("non-admin");
-    for (var i = 0; i < all.length; i++) {
+    for (let i = 0; i < all.length; i++) {
       all[i].style.display = "none";
     }
     document.getElementById("btn-edit-delete-items").click();
@@ -468,12 +513,12 @@ function setParameters() {
   }
   else {
 
-    var all = document.getElementsByClassName("admin");
-    for (var i = 0; i < all.length; i++) {
+    let all = document.getElementsByClassName("admin");
+    for (let i = 0; i < all.length; i++) {
       all[i].style.display = "none";
     }
     all = document.getElementsByClassName("non-admin");
-    for (var i = 0; i < all.length; i++) {
+    for (let i = 0; i < all.length; i++) {
       all[i].style.display = "block";
     }
     document.getElementById("btn-items-available").click();
@@ -487,23 +532,23 @@ function logout() {
   admin = false;
   //window.location.reload();
   libObj.changeLang("en");
-  var all = document.getElementsByClassName('form-error-msg');
-  for (var i = 0; i < all.length; i++) {
+  let all = document.getElementsByClassName('form-error-msg');
+  for (let i = 0; i < all.length; i++) {
     all[i].innerHTML = "";
   }
 
   all = document.getElementsByClassName('validate-add');
-  for (var i = 0; i < all.length; i++) {
+  for (let i = 0; i < all.length; i++) {
     all[i].classList.remove("invalid");
   }
 
   all = document.getElementsByClassName('validate-edit');
-  for (var i = 0; i < all.length; i++) {
+  for (let i = 0; i < all.length; i++) {
     all[i].classList.remove("invalid");
   }
 
   all = document.getElementsByClassName('validate-due-date');
-  for (var i = 0; i < all.length; i++) {
+  for (let i = 0; i < all.length; i++) {
     all[i].classList.remove("invalid");
   }
 
@@ -761,7 +806,7 @@ class library {
   addItem() {
     let itemObj = new item("99",
       document.getElementById("ip-add-item-type").value,
-      document.getElementById("ip-add-item-name").value,
+      selected_lang=="en"?document.getElementById("ip-add-item-name").value:document.getElementById("ip-add-item-name-fr").value,
       document.getElementById("ip-add-item-publisher").value,
       document.getElementById("ip-add-item-author").value,
       document.getElementById("ip-add-item-edition").value,
@@ -772,8 +817,8 @@ class library {
 
     this.itemArray.push(itemObj);
     libObj.reset();
-    var all = document.getElementsByClassName('validate-add');
-    for (var i = 0; i < all.length; i++) {
+    let all = document.getElementsByClassName('validate-add');
+    for (let i = 0; i < all.length; i++) {
       all[i].value = "";
     }
     document.getElementById("btn-add-item-image").value = "";
@@ -788,8 +833,8 @@ class library {
     due_date_cd = Number(document.getElementById("ip-due-date-cd").value);
     computed_due_date_CD = date.addDays(due_date_cd);
     due_date_modal.style.display = "none";
-    var all = document.getElementsByClassName('validate-due-date');
-    for (var i = 0; i < all.length; i++) {
+    let all = document.getElementsByClassName('validate-due-date');
+    for (let i = 0; i < all.length; i++) {
       all[i].value = "";
     }
 
@@ -878,8 +923,8 @@ class library {
 
   changeLang(lang) {
     let count = 0;
-
-    var all = Array.from(document.getElementsByClassName('item_name'));
+    selected_lang=lang;
+    let all = Array.from(document.getElementsByClassName('item_name'));
     all.forEach((item) => {
       for (count = 0; count < itemArray.length; count++) {
         if (itemArray[count].name == item.innerHTML) {
